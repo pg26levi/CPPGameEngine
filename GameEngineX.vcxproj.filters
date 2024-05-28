@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Engine">
+      <UniqueIdentifier>{ccdbdf11-c381-4f92-bf67-ba05fce45ca0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Public">
+      <UniqueIdentifier>{75c2830e-ea9b-4f39-a9f0-30582628d811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{3f73a39c-59f6-4cb6-a0b8-d251275c643c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Public">
+      <UniqueIdentifier>{6dcd4022-feb1-45d9-a4a5-3b9cee46ecd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Private">
+      <UniqueIdentifier>{9e4c503e-26a9-484b-be5c-d94f35576fc3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Public\EngineInterface.h">
+      <Filter>Source Files\Engine\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Public\EngineTypes.h">
+      <Filter>Source Files\Engine\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Public\GameInterface.h">
+      <Filter>Source Files\Game\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Public\SDL.h">
+      <Filter>Source Files\Engine\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\Private\Game.h" />
+    <ClInclude Include="Game\Actors\Actor.h" />
+    <ClInclude Include="Game\Components\Component.h" />
+    <ClInclude Include="Game\Components\RenderComponent.h" />
+    <ClInclude Include="Game\Components\TransformComponent.h" />
+    <ClInclude Include="Game\GameCore\ComponentTypes.h" />
+    <ClInclude Include="Game\GameCore\Utils.h" />
+    <ClInclude Include="Game\Components\CircleRenderComponent.h" />
+    <ClInclude Include="Game\Components\BoxRenderComponent.h" />
+    <ClInclude Include="Game\Singletons\RenderEngine.h" />
+    <ClInclude Include="Game\Components\PhysicsComponent.h" />
+    <ClInclude Include="Game\Singletons\PhysicsEngine.h" />
+    <ClInclude Include="Game\Components\CircleColliderPhysicsComponent.h" />
+    <ClInclude Include="Game\Singletons\WorldManager.h" />
+    <ClInclude Include="Game\GameCore\ActorTypes.h" />
+    <ClInclude Include="Game\Actors\Football.h" />
+    <ClInclude Include="Game\Actors\HockeyStick.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Game\Private\Main.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Private\Game.cpp">
+      <Filter>Source Files\Game\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actors\Actor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\Component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\RenderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\TransformComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\CircleRenderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\BoxRenderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Singletons\RenderEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\PhysicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Singletons\PhysicsEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\CircleColliderPhysicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Singletons\WorldManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actors\Football.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actors\HockeyStick.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Build\afternight.ttf" />
+    <Font Include="Build\Kanit-Regular.ttf" />
+  </ItemGroup>
+</Project>
