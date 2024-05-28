@@ -27,7 +27,7 @@ public:
 	virtual void EndPlay();
 	virtual void Tick(float deltaSeconds);
 
-	virtual void InitializeActor(const exVector2 spawnPosition);
+	virtual void InitializeActor(const Vector3 spawnPosition);
 
 	// Variadic Arguments
 	template<std::derived_from<Component> ComponentType, typename ...Args>

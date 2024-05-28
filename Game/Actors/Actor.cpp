@@ -20,7 +20,7 @@ void Actor::Tick(float deltaSeconds)
 {
 }
 
-void Actor::InitializeActor(const exVector2 spawnPosition)
+void Actor::InitializeActor(const Vector3 spawnPosition)
 {
 	mTransformComponent = AddComponentOfType<TransformComponent>(spawnPosition);
 }

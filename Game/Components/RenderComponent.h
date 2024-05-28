@@ -11,7 +11,7 @@ class RenderComponent : public Component,
 public:
 
     RenderComponent() = delete;
-    RenderComponent(std::shared_ptr<Actor> owner, exColor color, int layer, exVector2 offset = exVector2{0.0f, 0.0f});
+    RenderComponent(std::shared_ptr<Actor> owner, exColor color, int layer, Vector3 offset = Vector3{ 0.0f });
 
     virtual void InitializeComponent() override;
 
@@ -23,7 +23,7 @@ protected:
     exColor m_Color;
     int m_Layer;
 
-    exVector2 m_Offset;
+    Vector3 m_Offset;
 
     float m_Scale;
 

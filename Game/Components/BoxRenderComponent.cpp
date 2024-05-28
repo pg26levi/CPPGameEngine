@@ -3,7 +3,7 @@
 #include "Game/Actors/Actor.h"
 #include "Game/Components/TransformComponent.h"
 
-BoxRenderComponent::BoxRenderComponent(std::shared_ptr<Actor> owner, exColor color, float width, float height, int layer, exVector2 offset)
+BoxRenderComponent::BoxRenderComponent(std::shared_ptr<Actor> owner, exColor color, float width, float height, int layer, Vector3 offset)
 	: RenderComponent(owner, color, layer, offset),
 	m_Width(width),
 	m_height(height)
@@ -20,18 +20,17 @@ void BoxRenderComponent::Render(exEngineInterface* engineInterface)
 	{
 		return;
 	}
-	exVector2 centerPosition = transformComp->GetPosition();
+	Vector3 centerPosition = transformComp->GetPosition();
 
 	centerPosition += m_Offset;
 
-	exVector2 topLeft = centerPosition + exVector2{m_Width * -1, m_height };
-	exVector2 bottomRight = centerPosition + exVector2{m_Width, m_height * -1};
+	Vector3 topLeft = centerPosition + Vector3{m_Width * -1, m_height, 0.0f};
+	Vector3 bottomRight = centerPosition + Vector3{m_Width, m_height * -1, 0.0f};
 
 	// TODO: Add suport for layering in render component
-	engineInterface->DrawBox(topLeft, bottomRight, m_Color, m_Layer);
+	engineInterface->DrawBox(exVector2{ topLeft.x, topLeft.y }, exVector2{ bottomRight.x, bottomRight.y }, m_Color, m_Layer);
 
 	// Outline
 	engineInterface->DrawBox({topLeft.x - 5, topLeft.y + 5}, {bottomRight.x + 5, bottomRight.y - 5}, {0, 255, 0, 255}, m_Layer + 1);
-
 
 }

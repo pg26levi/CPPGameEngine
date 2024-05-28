@@ -1,18 +1,18 @@
 #include "../Components/TransformComponent.h"
 
-TransformComponent::TransformComponent(std::shared_ptr<Actor> owner, exVector2 loc)
+TransformComponent::TransformComponent(std::shared_ptr<Actor> owner, Vector3 loc)
     :   Component(owner), 
-        m_Location(loc)
+        m_Position(loc)
 {
 
 }
 
-exVector2 TransformComponent::GetPosition() const
+Vector3 TransformComponent::GetPosition() const
 {
-    return m_Location;
+    return m_Position;
 }
 
-void TransformComponent::SetPosition(const exVector2 inValue)
+void TransformComponent::SetPosition(const Vector3 inValue)
 {
-    m_Location = inValue;
+    m_Position = inValue;
 }

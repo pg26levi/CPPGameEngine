@@ -7,14 +7,16 @@ class TransformComponent : public Component
 public:
 
 	TransformComponent() = delete;
-	TransformComponent(std::shared_ptr<Actor> owner, exVector2 loc);
+	TransformComponent(std::shared_ptr<Actor> owner, Vector3 loc);
 
-	exVector2 GetPosition() const;
-	void SetPosition(const exVector2 inValue);
+	Vector3 GetPosition() const;
+	void SetPosition(const Vector3 inValue);
 
 private:
-	
-	exVector2 m_Location;
+
+	Vector3 m_Rotation;
+	Vector3 m_Scale;
+	Vector3 m_Position;
 
 };
 

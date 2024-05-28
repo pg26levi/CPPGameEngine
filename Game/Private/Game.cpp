@@ -68,8 +68,12 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 	//hockeyStick = WORLD->SpawnActorOfClass<HockeyStick>(exVector2{ 700.0f, 200.0f }, exColor{ 0, 255, 55, 255 });
 
-	myCube = WORLD->SpawnActorOfClass<Actor>(exVector2{ 200.0f, 400.0f });
+	myCube = WORLD->SpawnActorOfClass<Actor>(Vector3{ 2.0f, 0.0f, 0.0f });
 	myCube->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 0, 255, 255 }, 0.0f);
+
+
+	//myCube2 = WORLD->SpawnActorOfClass<Actor>(exVector2{ 100.0f, 100.0f });
+	//myCube2->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 0, 255, 255 }, 0.0f);
 
 
 }
@@ -121,17 +125,17 @@ void MyGame::Run( float fDeltaT )
 
 	if ( mUp )
 	{
-		Steph->SetVelocity(exVector2{ 0.0f, -1.0f });
+		//Steph->SetVelocity(exVector2{ 0.0f, -1.0f });
 		mTextPosition.y -= 40.0f * fDeltaT;
 	}
 	else if ( mDown )
 	{
-		Steph->SetVelocity(exVector2{ 0.0f, 1.0f });
+		//Steph->SetVelocity(exVector2{ 0.0f, 1.0f });
 		mTextPosition.y += 40.0f * fDeltaT;
 	}
 
 	//exVector2 p1, p2;
-	//exColor c;
+	exColor c;
 	//float r;
 
 	//c.mColor[0] = 255;
@@ -195,13 +199,17 @@ void MyGame::Run( float fDeltaT )
 	//p1.x = 400.0f;
 	//p1.y = 400.0f;
 
-	//c.mColor[0] = 0;
-	//c.mColor[1] = 0;
-	//c.mColor[2] = 0;
+	c.mColor[0] = 255;
+	c.mColor[1] = 255;
+	c.mColor[2] = 255;
 
 	//mEngine->DrawCircle( p1, r, c, 2 );
 
-	//mEngine->DrawText( mFontID, mTextPosition, "VFS", c, 0 );
+	mEngine->DrawText( mFontID, mTextPosition, "rizz", c, 0 );
+
+	float fps = 1000 / fDeltaT;
+
+	mEngine->DrawText(mFontID, exVector2{ 0.0f, 0.0f }, (std::to_string(fps) + "FPS").c_str(), c, 0);
 
 
 	if(mEngine)

@@ -14,11 +14,11 @@ public:
 
 	virtual void BeginPlay() override;
 
-	virtual void InitializeActor(const exVector2 spawnPosition) override;
+	virtual void InitializeActor(const Vector3 spawnPosition) override;
 
-	void SetVelocity(exVector2 velocity);
+	void SetVelocity(Vector3 velocity);
 
-	void OnCollisionDetected(exVector2 normal, std::weak_ptr<Actor> otherActor, std::weak_ptr<PhysicsComponent> otherComponent);
+	void OnCollisionDetected(Vector3 normal, std::weak_ptr<Actor> otherActor, std::weak_ptr<PhysicsComponent> otherComponent);
 
 private:
 

@@ -1,7 +1,9 @@
 #include "CubeRenderComponent.h"
 #include "Engine/Public/EngineInterface.h"
+#include <memory>
+#include "Game/Actors/Actor.h"
 
-CubeRenderComponent::CubeRenderComponent(std::shared_ptr<Actor> owner, exColor color, float scale, exVector2 offset)
+CubeRenderComponent::CubeRenderComponent(std::shared_ptr<Actor> owner, exColor color, float scale, Vector3 offset)
 	: RenderComponent(owner, color, 0, offset)
 {
 	m_Scale = scale;
@@ -28,6 +30,10 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 	matRotX.m[3][3] = 1;
 
 
+	matRot = matRotZ * matRotX;
+
+	matMVP = matRot * matProj;
+
 	for (const Triangle& tri : cubeMesh.tris) 
 	{
 
@@ -35,13 +41,9 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 
 		Triangle triRotated = tri;
 
-		triRotated.v[0] *= matRotZ;
-		triRotated.v[1] *= matRotZ;
-		triRotated.v[2] *= matRotZ;
-
-		triRotated.v[0] *= matRotX;
-		triRotated.v[1] *= matRotX;
-		triRotated.v[2] *= matRotX;
+		triRotated.v[0] *= matRot;
+		triRotated.v[1] *= matRot;
+		triRotated.v[2] *= matRot;
 
 		//
 
@@ -51,12 +53,12 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 		triTranslated.v[1].z = triRotated.v[1].z + 3.0f;
 		triTranslated.v[2].z = triRotated.v[2].z + 3.0f;
 
-		triTranslated.v[0] *= matProj;
-		triTranslated.v[1] *= matProj;
-		triTranslated.v[2] *= matProj;
-
 
 		Triangle triProjected = triTranslated;
+
+		triProjected.v[0] *= matProj;
+		triProjected.v[1] *= matProj;
+		triProjected.v[2] *= matProj;
 
 		triProjected.v[0].x += 1.0f; triProjected.v[0].y += 1.0f;
 		triProjected.v[1].x += 1.0f; triProjected.v[1].y += 1.0f;
@@ -71,7 +73,6 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 
 
 		DrawTriangle(engineInterface, triProjected, false, m_Color, 0);
-
 
 	}
 
