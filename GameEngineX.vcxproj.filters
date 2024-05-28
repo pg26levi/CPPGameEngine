@@ -51,6 +51,7 @@
     <ClInclude Include="Game\GameCore\ActorTypes.h" />
     <ClInclude Include="Game\Actors\Football.h" />
     <ClInclude Include="Game\Actors\HockeyStick.h" />
+    <ClInclude Include="Game\Components\CubeRenderComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Private\Main.cpp">
@@ -96,6 +97,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game\Actors\HockeyStick.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\CubeRenderComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

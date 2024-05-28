@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Components\CubeRenderComponent.h" />
     <ClInclude Include="Game\Actors\Football.h" />
     <ClInclude Include="Game\Components\CircleColliderPhysicsComponent.h" />
     <ClInclude Include="Game\Components\BoxRenderComponent.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Game\Actors\HockeyStick.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Components\CubeRenderComponent.cpp" />
     <ClCompile Include="Game\Actors\Football.cpp" />
     <ClCompile Include="Game\Components\CircleColliderPhysicsComponent.cpp" />
     <ClCompile Include="Game\Components\BoxRenderComponent.cpp" />

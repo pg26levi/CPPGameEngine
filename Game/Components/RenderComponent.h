@@ -25,6 +25,17 @@ protected:
 
     exVector2 m_Offset;
 
+    float m_Scale;
+
     virtual void Render(exEngineInterface* engineInterface) = 0;
+
+    void DrawTriangle(exEngineInterface* engineInterface, Triangle tri, bool filled, const exColor& color, int layer = 0);
+
+
+private:
+
+
+
+
 };
 

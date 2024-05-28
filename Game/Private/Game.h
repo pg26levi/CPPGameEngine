@@ -51,4 +51,6 @@ private:
 
 	std::shared_ptr<HockeyStick> hockeyStick;
 
+	std::shared_ptr<Actor>		myCube;
+
 };
