@@ -167,6 +167,7 @@
     <ClInclude Include="Game\Actors\HockeyStick.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\Public\EngineTypes.cpp" />
     <ClCompile Include="Game\Components\CubeRenderComponent.cpp" />
     <ClCompile Include="Game\Actors\Football.cpp" />
     <ClCompile Include="Game\Components\CircleColliderPhysicsComponent.cpp" />

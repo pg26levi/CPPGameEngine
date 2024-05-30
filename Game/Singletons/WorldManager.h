@@ -17,7 +17,7 @@ public:
 		std::shared_ptr<ActorType> newActor = Actor::MakeActor<ActorType>(arguments...);
 
 		newActor->InitializeActor(spawnLocation);
-		
+		m_Actors.push_back(newActor);
 		return newActor;
 	}
 
@@ -27,6 +27,8 @@ private:
 	WorldManager();
 
 	static WorldManager* sInstance;
+
+	std::list<std::shared_ptr<Actor>> m_Actors;
 
 };
 

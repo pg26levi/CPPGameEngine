@@ -31,6 +31,9 @@ public:
 
 	virtual void				Run( float fDeltaT );
 
+	virtual void Render();
+	virtual void Physics();
+
 private:
 
 	exEngineInterface*			mEngine;
@@ -39,6 +42,9 @@ private:
 
 	bool						mUp;
 	bool						mDown;
+
+	bool						canRender = false;
+	bool						canPhysics = false;
 
 	exVector2					mTextPosition;
 
@@ -53,5 +59,9 @@ private:
 
 	std::shared_ptr<Actor>		myCube;
 	std::shared_ptr<Actor>		myCube2;
+
+
+	std::thread* RenderThread = nullptr;
+	std::thread* PhysicsThread = nullptr;
 
 };

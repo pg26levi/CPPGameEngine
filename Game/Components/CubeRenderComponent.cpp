@@ -49,10 +49,11 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 
 		Triangle triTranslated = triRotated;
 
-		triTranslated.v[0].z = triRotated.v[0].z + 3.0f;
-		triTranslated.v[1].z = triRotated.v[1].z + 3.0f;
-		triTranslated.v[2].z = triRotated.v[2].z + 3.0f;
+		Vector3 ownerPos = GetOwner()->FindComponentOfType<TransformComponent>()->GetPosition();
 
+		triTranslated.v[0] += ownerPos;
+		triTranslated.v[1] += ownerPos;
+		triTranslated.v[2] += ownerPos;
 
 		Triangle triProjected = triTranslated;
 

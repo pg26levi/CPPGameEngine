@@ -13,14 +13,29 @@
 
 #define PI 3.14159f
 
+struct Vector3;
+
 struct Time 
 {
-	static float DeltaTime;
+	static double DeltaTime;
 };
 
 struct Matrix4
 {
 	float m[4][4] = { 0 };
+
+	static Matrix4 Identity() 
+	{
+		Matrix4 outMat = { 0 };
+
+		outMat.m[0][0] = 1.0f;
+		outMat.m[1][1] = 1.0f;
+		outMat.m[2][2] = 1.0f;
+		outMat.m[3][3] = 1.0f;
+
+		return outMat;
+
+	}
 
 	Matrix4 operator*(const Matrix4& o) 
 	{
@@ -75,6 +90,8 @@ struct Matrix4
 			this->m[3][0] * o.m[0][3] + this->m[3][1] * o.m[1][3] + this->m[3][2] * o.m[2][3] + this->m[3][3] * o.m[3][3]
 		};
 	}
+
+	static Matrix4 Translate(const Matrix4& inMat, const Vector3& inVec);
 
 };
 

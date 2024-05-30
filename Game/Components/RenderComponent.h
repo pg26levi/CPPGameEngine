@@ -15,7 +15,6 @@ public:
 
     virtual void InitializeComponent() override;
 
-
     exColor GetColor() const;
     void SetColor(exColor inColor);
 
@@ -30,12 +29,6 @@ protected:
     virtual void Render(exEngineInterface* engineInterface) = 0;
 
     void DrawTriangle(exEngineInterface* engineInterface, Triangle tri, bool filled, const exColor& color, int layer = 0);
-
-
-private:
-
-
-
 
 };
 
