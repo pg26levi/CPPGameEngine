@@ -32,7 +32,7 @@ void PhysicsEngine::Physics()
 					if (physicsComp.lock()->IsCollisionDetected(otherPhysicsComponent.lock())) 
 					{
 						// TODO change resolution based on requirement
-						const Vector3 newVelocity = physicsComp.lock()->GetVelocity() * -1.0f;
+						const glm::vec3 newVelocity = physicsComp.lock()->GetVelocity() * -1.0f;
 						physicsComp.lock()->SetVelocity(newVelocity);
 
 						// call collision events
@@ -40,7 +40,7 @@ void PhysicsEngine::Physics()
 						{
 							// @TODO write function to calculate normal
 
-							collisionEvents(Vector3(0.0f, 0.0f, 0.0f), otherPhysicsComponent.lock()->GetOwner(), otherPhysicsComponent.lock());
+							collisionEvents(glm::vec3(0.0f, 0.0f, 0.0f), otherPhysicsComponent.lock()->GetOwner(), otherPhysicsComponent.lock());
 
 						}
 					}

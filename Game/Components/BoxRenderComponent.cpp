@@ -3,7 +3,7 @@
 #include "Game/Actors/Actor.h"
 #include "Game/Components/TransformComponent.h"
 
-BoxRenderComponent::BoxRenderComponent(std::shared_ptr<Actor> owner, exColor color, float width, float height, int layer, Vector3 offset)
+BoxRenderComponent::BoxRenderComponent(std::shared_ptr<Actor> owner, exColor color, float width, float height, int layer, glm::vec3 offset)
 	: RenderComponent(owner, color, layer, offset),
 	m_Width(width),
 	m_height(height)
@@ -20,12 +20,12 @@ void BoxRenderComponent::Render(exEngineInterface* engineInterface)
 	{
 		return;
 	}
-	Vector3 centerPosition = transformComp->GetPosition();
+	glm::vec3 centerPosition = transformComp->GetPosition();
 
 	centerPosition += m_Offset;
 
-	Vector3 topLeft = centerPosition + Vector3{m_Width * -1, m_height, 0.0f};
-	Vector3 bottomRight = centerPosition + Vector3{m_Width, m_height * -1, 0.0f};
+	glm::vec3 topLeft = centerPosition + glm::vec3{m_Width * -1, m_height, 0.0f};
+	glm::vec3 bottomRight = centerPosition + glm::vec3{m_Width, m_height * -1, 0.0f};
 
 	// TODO: Add suport for layering in render component
 	engineInterface->DrawBox(exVector2{ topLeft.x, topLeft.y }, exVector2{ bottomRight.x, bottomRight.y }, m_Color, m_Layer);

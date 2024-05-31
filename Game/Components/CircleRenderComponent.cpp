@@ -17,7 +17,7 @@ void CircleRenderComponent::Render(exEngineInterface* engineInterface)
 	{
 		return;
 	}
-	const Vector3 centerPosition = transformComp->GetPosition();
+	const glm::vec3 centerPosition = transformComp->GetPosition();
 	// TODO: Add suport for layering in render component
 	engineInterface->DrawCircle(exVector2{ centerPosition.x, centerPosition.y }, m_Radius, m_Color, m_Layer);
 }

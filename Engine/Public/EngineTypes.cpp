@@ -1,6 +1,6 @@
 #include "Engine/Public/EngineTypes.h"
 
-Matrix4 Matrix4::Translate(const Matrix4& inMat, const Vector3& inVec)
+Matrix4 Matrix4::Translate(const Matrix4& inMat, const glm::vec3& inVec)
 {
 
 	Matrix4 outMat = inMat;

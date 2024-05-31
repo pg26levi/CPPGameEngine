@@ -12,7 +12,7 @@ public:
 
 	virtual void BeginPlay() override;
 
-	virtual void InitializeActor(const Vector3 spawnPosition) override;
+	virtual void InitializeActor(const glm::vec3 spawnPosition) override;
 
 private:
 

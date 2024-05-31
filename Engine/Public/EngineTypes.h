@@ -7,13 +7,14 @@
 
 #pragma once
 #include <vector>
-
+#include "3rdParty/GLM/glm.hpp"
+#include "3rdParty/GLM/gtc/matrix_transform.hpp"
+#include "3rdParty/GLM/gtc/type_ptr.hpp"
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
 #define PI 3.14159f
 
-struct Vector3;
 
 struct Time 
 {
@@ -91,101 +92,15 @@ struct Matrix4
 		};
 	}
 
-	static Matrix4 Translate(const Matrix4& inMat, const Vector3& inVec);
+	static Matrix4 Translate(const Matrix4& inMat, const glm::vec3& inVec);
 
 };
 
-struct Vector3
-{
-	float x, y, z;
 
-	Vector3 operator*(const Matrix4& mat) 
-	{
-		Vector3 o;
-
-		o.x = this->x * mat.m[0][0] + this->y * mat.m[1][0] + this->z * mat.m[2][0] + mat.m[3][0];
-		o.y = this->x * mat.m[0][1] + this->y * mat.m[1][1] + this->z * mat.m[2][1] + mat.m[3][1];
-		o.z = this->x * mat.m[0][2] + this->y * mat.m[1][2] + this->z * mat.m[2][2] + mat.m[3][2];
-
-		float w = this->x * mat.m[0][3] + this->y * mat.m[1][3] + this->z * mat.m[2][3] + mat.m[3][3];
-
-		if (w != 0.0f)
-		{
-			o.x /= w;
-			o.y /= w;
-			o.z /= w;
-		}
-
-		return *this;
-
-	}
-
-	Vector3 operator*=(const Matrix4& mat) 
-	{
-		Vector3 o;
-
-		o.x = this->x * mat.m[0][0] + this->y * mat.m[1][0] + this->z * mat.m[2][0] + mat.m[3][0];
-		o.y = this->x * mat.m[0][1] + this->y * mat.m[1][1] + this->z * mat.m[2][1] + mat.m[3][1];
-		o.z = this->x * mat.m[0][2] + this->y * mat.m[1][2] + this->z * mat.m[2][2] + mat.m[3][2];
-
-		float w = this->x * mat.m[0][3] + this->y * mat.m[1][3] + this->z * mat.m[2][3] + mat.m[3][3];
-
-		if (w != 0.0f)
-		{
-			o.x /= w;
-			o.y /= w;
-			o.z /= w;
-		}
-
-		this->x = o.x;
-		this->y = o.y;
-		this->z = o.z;
-
-		return *this;
-	}
-
-	Vector3 operator-(const Vector3& other)
-	{
-		return Vector3{ this->x - other.x, this->y - other.y, this->z - other.z };
-	}
-
-	Vector3 operator-(const Vector3& other) const
-	{
-		return Vector3{ this->x - other.x, this->y - other.y, this->z - other.z };
-	}
-
-	Vector3 operator+(const Vector3& other)
-	{
-		return Vector3{ this->x + other.x, this->y + other.y, this->z + other.z };
-	}
-
-	Vector3 operator+(const Vector3& other) const
-	{
-		return Vector3{ this->x + other.x, this->y + other.y, this->z + other.z };
-	}
-
-	Vector3 operator*(const float& multiplicationFactor)
-	{
-		return { this->x * multiplicationFactor, this->y * multiplicationFactor, this->z * multiplicationFactor };
-	}
-
-	Vector3 operator*(const float& multiplicationFactor) const
-	{
-		return { this->x * multiplicationFactor, this->y * multiplicationFactor, this->z * multiplicationFactor };
-	}
-
-	Vector3 operator+=(const Vector3& other)
-	{
-		this->x += other.x;
-		this->y += other.y;
-		this->z += other.z;
-		return *this;
-	}
-};
 
 struct Triangle
 {
-	Vector3 v[3];
+	glm::vec3 v[3];
 };
 
 struct Mesh 

@@ -3,7 +3,7 @@
 #include "Game/Actors/Actor.h"
 #include "Game/Singletons/PhysicsEngine.h"
 
-PhysicsComponent::PhysicsComponent(std::shared_ptr<Actor> owner, bool isStatic, bool isGravityEnabled, Vector3 velocity) :
+PhysicsComponent::PhysicsComponent(std::shared_ptr<Actor> owner, bool isStatic, bool isGravityEnabled, glm::vec3 velocity) :
 	Component::Component(owner)
 {
 	mIsStatic = isStatic;
@@ -20,7 +20,7 @@ void PhysicsComponent::Physics()
 
 		if (std::shared_ptr<TransformComponent> transformComponent = m_Owner->FindComponentOfType<TransformComponent>()) 
 		{
-			const Vector3 newPosition = transformComponent->GetPosition() + mVelocity;
+			const glm::vec3 newPosition = transformComponent->GetPosition() + mVelocity;
 			// TODO add gravity
 			transformComponent->SetPosition(newPosition);
 		}
@@ -37,12 +37,12 @@ void PhysicsComponent::InitializeComponent()
 
 }
 
-Vector3 PhysicsComponent::GetVelocity() const
+glm::vec3 PhysicsComponent::GetVelocity() const
 {
 	return mVelocity;
 }
 
-void PhysicsComponent::SetVelocity(const Vector3 inVelocity)
+void PhysicsComponent::SetVelocity(const glm::vec3 inVelocity)
 {
 	mVelocity = inVelocity;
 }

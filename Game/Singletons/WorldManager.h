@@ -11,7 +11,7 @@ public:
 	static WorldManager* GetInstance();
 
 	template<std::derived_from<Actor> ActorType, typename ...Args>
-	std::shared_ptr<ActorType> SpawnActorOfClass(Vector3 spawnLocation, Args... arguments)
+	std::shared_ptr<ActorType> SpawnActorOfClass(glm::vec3 spawnLocation, Args... arguments)
 	{
 		//std::shared_ptr<ActorType> newActor = std::make_shared<ActorType>(arguments...);
 		std::shared_ptr<ActorType> newActor = Actor::MakeActor<ActorType>(arguments...);

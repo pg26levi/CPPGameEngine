@@ -9,13 +9,13 @@ void HockeyStick::BeginPlay()
 {
 }
 
-void HockeyStick::InitializeActor(const Vector3 spawnPosition)
+void HockeyStick::InitializeActor(const glm::vec3 spawnPosition)
 {
 	Actor::InitializeActor(spawnPosition);
 
 	AddComponentOfType<BoxRenderComponent>(mStickColor, 1.0f, 100.0f, 0);
 
-	AddComponentOfType<BoxRenderComponent>(mStickColor, 20.0f, 1.0f, 0, Vector3{ -30.0f, 100.0f });
+	AddComponentOfType<BoxRenderComponent>(mStickColor, 20.0f, 1.0f, 0, glm::vec3{-30.0f, 100.0f, 0.0f });
 
 	//exVector2 newPos = mTransformComponent->GetPosition();
 	//newPos.x -= 30.0f;

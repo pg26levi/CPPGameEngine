@@ -43,8 +43,8 @@ private:
 	bool						mUp;
 	bool						mDown;
 
-	bool						canRender = false;
-	bool						canPhysics = false;
+	bool						canRender = true;
+	bool						canPhysics = true;
 
 	exVector2					mTextPosition;
 

@@ -8,7 +8,7 @@ public:
 
     CircleColliderPhysicsComponent() = delete;
 
-    CircleColliderPhysicsComponent(std::shared_ptr<Actor> owner, float radius, Vector3 velocity);
+    CircleColliderPhysicsComponent(std::shared_ptr<Actor> owner, float radius, glm::vec3 velocity);
 
 protected:
 

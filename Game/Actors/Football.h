@@ -14,11 +14,11 @@ public:
 
 	virtual void BeginPlay() override;
 
-	virtual void InitializeActor(const Vector3 spawnPosition) override;
+	virtual void InitializeActor(const glm::vec3 spawnPosition) override;
 
-	void SetVelocity(Vector3 velocity);
+	void SetVelocity(glm::vec3 velocity);
 
-	void OnCollisionDetected(Vector3 normal, std::weak_ptr<Actor> otherActor, std::weak_ptr<PhysicsComponent> otherComponent);
+	void OnCollisionDetected(glm::vec3 normal, std::weak_ptr<Actor> otherActor, std::weak_ptr<PhysicsComponent> otherComponent);
 
 private:
 

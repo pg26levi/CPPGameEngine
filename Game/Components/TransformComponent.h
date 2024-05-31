@@ -7,16 +7,16 @@ class TransformComponent : public Component
 public:
 
 	TransformComponent() = delete;
-	TransformComponent(std::shared_ptr<Actor> owner, Vector3 loc);
+	TransformComponent(std::shared_ptr<Actor> owner, glm::vec3 loc);
 
-	Vector3 GetPosition() const;
-	void SetPosition(const Vector3 inValue);
+	glm::vec3 GetPosition() const;
+	void SetPosition(const glm::vec3 inValue);
 
 private:
 
-	Vector3 m_Rotation;
-	Vector3 m_Scale;
-	Vector3 m_Position;
+	glm::vec3 m_Rotation;
+	glm::vec3 m_Scale;
+	glm::vec3 m_Position;
 
 };
 

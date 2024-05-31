@@ -74,22 +74,19 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 	//hockeyStick = WORLD->SpawnActorOfClass<HockeyStick>(exVector2{ 700.0f, 200.0f }, exColor{ 0, 255, 55, 255 });
 
-	myCube = WORLD->SpawnActorOfClass<Actor>(Vector3{ 0.0f, 0.0f, 2.0f });
+	myCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3{ 0.0f, 0.0f, 0.0f });
 	myCube->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 0, 255, 255 }, 0.0f);
 
 
-	myCube2 = WORLD->SpawnActorOfClass<Actor>(Vector3{ 2.0f, 0.0f, 5.0f });
-	myCube2->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);
+	//myCube2 = WORLD->SpawnActorOfClass<Actor>(glm::vec3{ 2.0f, 0.0f, 5.0f });
+	//myCube2->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);
 
-	for (int i = 0; i < 100; i++) 
-	{
-		WORLD->SpawnActorOfClass<Actor>(Vector3{ 2.0f + i, 0.0f, 5.0f })->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);;
-		WORLD->SpawnActorOfClass<Actor>(Vector3{ 2.0f - i, 0.0f, 5.0f })->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);;
-	}
+	//for (int i = 0; i < 100; i++) 
+	//{
+	//	WORLD->SpawnActorOfClass<Actor>(glm::vec3{ 2.0f + i, 0.0f, 5.0f })->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);;
+	//	WORLD->SpawnActorOfClass<Actor>(glm::vec3{ 2.0f - i, 0.0f, 5.0f })->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);;
+	//}
 
-
-	PhysicsThread = new std::thread(&MyGame::Physics, this);
-	RenderThread = new std::thread(&MyGame::Render, this);
 
 
 }
@@ -229,8 +226,11 @@ void MyGame::Run( float fDeltaT )
 	mEngine->DrawText(mFontID, exVector2{ 0.0f, 25.0f }, (std::to_string(Time::DeltaTime) + "ms / frame").c_str(), c, 0);
 
 
-	canRender = true;
-	canPhysics = true;
+	PhysicsThread = new std::thread(&MyGame::Physics, this);
+	RenderThread = new std::thread(&MyGame::Render, this);
+
+	//canRender = true;
+	//canPhysics = true;
 
 	RenderThread->join();
 	PhysicsThread->join();

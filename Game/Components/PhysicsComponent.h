@@ -4,7 +4,7 @@
 
 class PhysicsComponent;
 
-typedef std::function<void(Vector3, std::weak_ptr<Actor>, std::weak_ptr<PhysicsComponent>)> CollisionEventSignature;
+typedef std::function<void(glm::vec3, std::weak_ptr<Actor>, std::weak_ptr<PhysicsComponent>)> CollisionEventSignature;
 
 class PhysicsComponent : public Component,
 						 public std::enable_shared_from_this<PhysicsComponent>
@@ -15,7 +15,7 @@ class PhysicsComponent : public Component,
 public:
 
 	PhysicsComponent() = delete;
-	PhysicsComponent(std::shared_ptr<Actor> owner, bool isStatic, bool isGravityEnabled, Vector3 velocity);
+	PhysicsComponent(std::shared_ptr<Actor> owner, bool isStatic, bool isGravityEnabled, glm::vec3 velocity);
 
 	// TODO
 	// float GetSpeed() const;
@@ -25,8 +25,8 @@ public:
 	virtual void InitializeComponent() override;
 
 	// Getter and Setters
-	Vector3 GetVelocity() const;
-	void SetVelocity(const Vector3 inVelocity);
+	glm::vec3 GetVelocity() const;
+	void SetVelocity(const glm::vec3 inVelocity);
 
 	virtual bool IsCollisionDetected(std::shared_ptr<PhysicsComponent> otherComponent);
 
@@ -37,7 +37,7 @@ protected:
 	bool mIsStatic;
 	bool mIsGravityEnabled;
 
-	Vector3 mVelocity;
+	glm::vec3 mVelocity;
 
 	virtual void Physics();
 
