@@ -27,12 +27,13 @@ const char* gWindowName = "W Game";
 //-----------------------------------------------------------------
 
 double Time::DeltaTime = 0.0f;
+double Time::ElapsedTime = 0.0f;
 
 MyGame::MyGame()
 	: mEngine( nullptr )
 	, mFontID( -1 )
-	, mUp( false )
-	, mDown( false )
+	, mRight( false )
+	, mLeft( false )
 {
 }
 
@@ -53,7 +54,7 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 {
 	mEngine = pEngine;
 
-	mFontID = mEngine->LoadFont( "Build/Kanit-Regular.ttf", 32 );
+	mFontID = mEngine->LoadFont( "Build/Kanit-Regular.ttf", 24 );
 
 	mTextPosition.x = 50.0f;
 	mTextPosition.y = 50.0f;
@@ -74,19 +75,44 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 	//hockeyStick = WORLD->SpawnActorOfClass<HockeyStick>(exVector2{ 700.0f, 200.0f }, exColor{ 0, 255, 55, 255 });
 
-	myCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3{ 0.0f, 0.0f, 0.0f });
-	myCube->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 0, 255, 255 }, 0.0f);
 
 
-	//myCube2 = WORLD->SpawnActorOfClass<Actor>(glm::vec3{ 2.0f, 0.0f, 5.0f });
-	//myCube2->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);
+	playerPos = glm::vec3(0.0f, 0.0f, -5.0f);
+	Player = WORLD->SpawnActorOfClass<Actor>(playerPos);
+	Player->AddComponentOfType<CameraComponent>(90.0f, 0.1f, 1000.0f);
 
-	//for (int i = 0; i < 100; i++) 
-	//{
-	//	WORLD->SpawnActorOfClass<Actor>(glm::vec3{ 2.0f + i, 0.0f, 5.0f })->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);;
-	//	WORLD->SpawnActorOfClass<Actor>(glm::vec3{ 2.0f - i, 0.0f, 5.0f })->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);;
-	//}
+	WORLD->SetActiveCamera(Player);
 
+	myCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3(-5.0f, 0.0f, 0.0f));
+	myCube->AddComponentOfType<CubeRenderComponent>(exColor{ 255, 0, 0, 255 }, 0.0f);
+
+	myCube2 = WORLD->SpawnActorOfClass<Actor>(glm::vec3(0.0f, 0.0f, 0.0f));
+	myCube2->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);
+
+	myCube3 = WORLD->SpawnActorOfClass<Actor>(glm::vec3(5.0f, 0.0f, 0.0f));
+	myCube3->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 0, 255, 255 }, 0.0f);
+
+	exColor col;
+
+	for (int i = 0; i < 10; i++) 
+	{
+		for (int j = 0; j < 10; j++) {
+			// SMILEY FACE
+			if ((j == 1 && (i >= 2 && i <= 7)) || ((j == 2 || j == 3) && (i == 1 || i == 8)) || ((i == 3 || i == 6) && (j == 5 || j == 6 || j == 7))) 
+			{
+				col = exColor{ 0, 0, 255, 255 };
+			}
+			else 
+				col = exColor{ 255, 0, 255, 255 };
+			
+
+			WORLD->SpawnActorOfClass<Actor>(glm::vec3( i * 2, j * 2, -10.0f ))->AddComponentOfType<CubeRenderComponent>(col, 0.0f);;
+		}
+	}
+
+	//SDL_SetRelativeMouseMode(SDL_TRUE);
+
+	prevFrameTime = SDL_GetTicks();
 
 
 }
@@ -124,8 +150,13 @@ void MyGame::OnEventsConsumed()
 	int nKeys = 0;
 	const Uint8 *pState = SDL_GetKeyboardState( &nKeys );
 
-	mUp = pState[SDL_SCANCODE_LEFT];
-	mDown = pState[SDL_SCANCODE_RIGHT];
+	mRight = pState[SDL_SCANCODE_D];
+	mLeft = pState[SDL_SCANCODE_A];
+	mBackwards = pState[SDL_SCANCODE_S];
+	mForward = pState[SDL_SCANCODE_W];
+
+	mUp = pState[SDL_SCANCODE_Q];
+	mDown = pState[SDL_SCANCODE_E];
 }
 
 //-----------------------------------------------------------------
@@ -134,18 +165,41 @@ void MyGame::OnEventsConsumed()
 void MyGame::Run( float fDeltaT )
 {
 
-	Time::DeltaTime = fDeltaT;
 
-	if ( mUp )
+	Uint32 currentFrameTime = SDL_GetTicks();
+	float deltaTime = (currentFrameTime - prevFrameTime) / 1000.0f;
+	prevFrameTime = currentFrameTime;
+
+	Time::DeltaTime = deltaTime;
+
+
+	if ( mRight )
 	{
-		//Steph->SetVelocity(exVector2{ 0.0f, -1.0f });
-		mTextPosition.y -= 40.0f * fDeltaT;
+		playerPos.x -= 10.0f * Time::DeltaTime;
 	}
-	else if ( mDown )
+	if ( mLeft )
 	{
-		//Steph->SetVelocity(exVector2{ 0.0f, 1.0f });
-		mTextPosition.y += 40.0f * fDeltaT;
+		playerPos.x += 10.0f * Time::DeltaTime;
 	}
+	if (mForward) 
+	{
+		playerPos.z += 10.0f * Time::DeltaTime;
+	}
+	if (mBackwards)
+	{
+		playerPos.z -= 10.0f * Time::DeltaTime;
+	}
+	if (mUp) 
+	{
+		playerPos.y += 10.0f * Time::DeltaTime;
+	}
+	if (mDown) 
+	{
+		playerPos.y -= 10.0f * Time::DeltaTime;
+	}
+
+
+	Player->FindComponentOfType<TransformComponent>()->SetPosition(playerPos);
 
 	//exVector2 p1, p2;
 	exColor c;
@@ -237,6 +291,12 @@ void MyGame::Run( float fDeltaT )
 
 	//canRender = false;
 	//canPhysics = false;
+
+	Time::ElapsedTime += Time::DeltaTime;
+
+	glm::vec3 pos = Player->GetPosition();
+	std::string posString = "Camera Pos: " + std::to_string(pos.x).substr(0, 5) + ", " + std::to_string(pos.y).substr(0, 5) + ", " + std::to_string(pos.z).substr(0, 5);
+	mEngine->DrawText(0, exVector2{ 0.0f, 50.0f }, posString.c_str(), exColor{ 255, 0, 0, 255 }, 0);
 
 }
 

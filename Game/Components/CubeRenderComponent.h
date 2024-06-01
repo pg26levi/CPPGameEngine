@@ -19,12 +19,11 @@ public:
 private:
 
 	Mesh cubeMesh;
-	//Matrix4 matProj;
-	glm::mat4 matRotZ;
-	glm::mat4 matRotX;
 	glm::mat4 matProj;
 
 	glm::mat4 matRot;
+
+	glm::mat4 identity = glm::mat4(1.0f);
 
 	//Matrix4 matMVP;
 

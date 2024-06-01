@@ -39,7 +39,11 @@ private:
 	exEngineInterface*			mEngine;
 
 	int							mFontID;
-
+	// @TODO BITFIELD INPUT HANDLER
+	bool						mRight;
+	bool						mLeft;
+	bool						mForward;
+	bool						mBackwards;
 	bool						mUp;
 	bool						mDown;
 
@@ -47,6 +51,8 @@ private:
 	bool						canPhysics = true;
 
 	exVector2					mTextPosition;
+
+	std::shared_ptr<Actor>		Player;
 
 	std::shared_ptr<Actor>		GameDesignersHead;
 
@@ -59,9 +65,14 @@ private:
 
 	std::shared_ptr<Actor>		myCube;
 	std::shared_ptr<Actor>		myCube2;
+	std::shared_ptr<Actor>		myCube3;
 
 
 	std::thread* RenderThread = nullptr;
 	std::thread* PhysicsThread = nullptr;
+
+	glm::vec3 playerPos;
+
+	int prevFrameTime = 0;
 
 };

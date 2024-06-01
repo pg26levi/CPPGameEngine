@@ -52,6 +52,8 @@
     <ClInclude Include="Game\Actors\Football.h" />
     <ClInclude Include="Game\Actors\HockeyStick.h" />
     <ClInclude Include="Game\Components\CubeRenderComponent.h" />
+    <ClInclude Include="Game\Components\CameraComponent.h" />
+    <ClInclude Include="Game\Actors\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Private\Main.cpp">
@@ -100,6 +102,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game\Components\CubeRenderComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Public\EngineTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\CameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Actors\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

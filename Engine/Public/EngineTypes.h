@@ -19,6 +19,9 @@
 struct Time 
 {
 	static double DeltaTime;
+
+	static double ElapsedTime;
+
 };
 
 struct Matrix4

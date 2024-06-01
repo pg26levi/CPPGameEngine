@@ -1,6 +1,8 @@
 #pragma once
 
+// Core components
 #include "Game/Components/TransformComponent.h"
+#include "Game/Components/CameraComponent.h"
 
 // RenderComponents
 #include "Game/Components/RenderComponent.h"

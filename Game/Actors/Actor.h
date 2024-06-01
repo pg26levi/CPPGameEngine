@@ -54,6 +54,8 @@ public:
 		return nullptr;
 	}
 
+	glm::vec3 GetPosition() const { return mTransformComponent->GetPosition(); }
+
 protected:
 
 	std::shared_ptr<TransformComponent> mTransformComponent;

@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Components\CameraComponent.h" />
     <ClInclude Include="Game\Components\CubeRenderComponent.h" />
     <ClInclude Include="Game\Actors\Football.h" />
     <ClInclude Include="Game\Components\CircleColliderPhysicsComponent.h" />
@@ -165,8 +166,10 @@
     <ClInclude Include="Game\Singletons\PhysicsEngine.h" />
     <ClInclude Include="Game\Singletons\WorldManager.h" />
     <ClInclude Include="Game\Actors\HockeyStick.h" />
+    <ClInclude Include="Game\Actors\Player.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Components\CameraComponent.cpp" />
     <ClCompile Include="Engine\Public\EngineTypes.cpp" />
     <ClCompile Include="Game\Components\CubeRenderComponent.cpp" />
     <ClCompile Include="Game\Actors\Football.cpp" />
@@ -184,6 +187,7 @@
     <ClCompile Include="Game\Singletons\PhysicsEngine.cpp" />
     <ClCompile Include="Game\Singletons\WorldManager.cpp" />
     <ClCompile Include="Game\Actors\HockeyStick.cpp" />
+    <ClCompile Include="Game\Actors\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Build\afternight.ttf" />

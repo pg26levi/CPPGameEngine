@@ -11,7 +11,7 @@ class RenderComponent : public Component,
 public:
 
     RenderComponent() = delete;
-    RenderComponent(std::shared_ptr<Actor> owner, exColor color, int layer, glm::vec3 offset = glm::vec3{ 0.0f });
+    RenderComponent(std::shared_ptr<Actor> owner, exColor color, int layer, glm::vec3 offset = glm::vec3(0.0f));
 
     virtual void InitializeComponent() override;
 
@@ -30,5 +30,6 @@ protected:
 
     void DrawTriangle(exEngineInterface* engineInterface, Triangle tri, bool filled, const exColor& color, int layer = 0);
 
+    glm::vec3 NormalizeCoordinates(const glm::vec4& vert) const;
 };
 

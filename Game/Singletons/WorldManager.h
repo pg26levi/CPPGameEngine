@@ -21,6 +21,10 @@ public:
 		return newActor;
 	}
 
+	std::weak_ptr<CameraComponent> GetActiveCamera() const { return m_ActiveCamera; }
+
+	void SetActiveCamera(std::shared_ptr<Actor> inActor);
+
 
 private:
 
@@ -29,6 +33,8 @@ private:
 	static WorldManager* sInstance;
 
 	std::list<std::shared_ptr<Actor>> m_Actors;
+
+	std::weak_ptr<CameraComponent> m_ActiveCamera;
 
 };
 

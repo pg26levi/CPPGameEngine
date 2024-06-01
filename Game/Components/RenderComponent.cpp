@@ -32,23 +32,34 @@ void RenderComponent::SetColor(exColor inColor)
 
 void RenderComponent::DrawTriangle(exEngineInterface* engineInterface, Triangle tri, bool filled, const exColor& color, int layer)
 {
-	if (!filled) 
-	{
-		engineInterface->DrawLine(exVector2{ tri.v[0].x, tri.v[0].y }, exVector2{ tri.v[1].x, tri.v[1].y }, color, layer);
-		engineInterface->DrawLine(exVector2{ tri.v[1].x, tri.v[1].y }, exVector2{ tri.v[2].x, tri.v[2].y }, color, layer);
-		engineInterface->DrawLine(exVector2{ tri.v[2].x, tri.v[2].y }, exVector2{ tri.v[0].x, tri.v[0].y }, color, layer);
-	}
-	else 
-	{
-		engineInterface->DrawLine(exVector2{ tri.v[0].x, tri.v[0].y }, exVector2{ tri.v[1].x, tri.v[1].y }, color, layer);
-		engineInterface->DrawLine(exVector2{ tri.v[1].x, tri.v[1].y }, exVector2{ tri.v[2].x, tri.v[2].y }, color, layer);
-		engineInterface->DrawLine(exVector2{ tri.v[2].x, tri.v[2].y }, exVector2{ tri.v[0].x, tri.v[0].y }, color, layer);
-	}
+	// @TODO FILLED
+
+
+	engineInterface->DrawLine(exVector2{ tri.v[0].x, tri.v[0].y }, exVector2{ tri.v[1].x, tri.v[1].y }, color, layer);
+	engineInterface->DrawLine(exVector2{ tri.v[1].x, tri.v[1].y }, exVector2{ tri.v[2].x, tri.v[2].y }, color, layer);
+	engineInterface->DrawLine(exVector2{ tri.v[2].x, tri.v[2].y }, exVector2{ tri.v[0].x, tri.v[0].y }, color, layer);
+
+	//engineInterface->DrawLine(exVector2{ tri.v[0].x, tri.v[0].y }, exVector2{ tri.v[1].x, tri.v[1].y }, exColor{255, 0, 0, 255}, layer);
+	//engineInterface->DrawLine(exVector2{ tri.v[1].x, tri.v[1].y }, exVector2{ tri.v[2].x, tri.v[2].y }, exColor{0, 255, 0, 255}, layer);
+	//engineInterface->DrawLine(exVector2{ tri.v[2].x, tri.v[2].y }, exVector2{ tri.v[0].x, tri.v[0].y }, exColor{ 0, 0, 255, 255 }, layer);
+
 }
 
+glm::vec3 RenderComponent::NormalizeCoordinates(const glm::vec4& vert) const
+{
 
+	glm::vec3 ndc = glm::vec3(vert);
+	// Zero divide check
+	if (vert.w != 0.0f) 
+	{
+		// Normalize from clip space to screen space
+		ndc /= vert.w;
+	}
 
+	glm::vec3 coords;
 
+	coords.x = (ndc.x + 1.0f) * 0.5f * kViewportWidth;
+	coords.y = (1.0f - ndc.y) * 0.5f * kViewportHeight;
 
-
-
+	return coords;
+}
