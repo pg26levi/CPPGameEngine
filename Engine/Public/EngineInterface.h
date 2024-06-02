@@ -14,8 +14,8 @@
 
 const int kEngineVersion = 1;			// modify when API changes
 
-const int kViewportWidth = 800;
-const int kViewportHeight = 600;
+const int kViewportWidth = 1920;
+const int kViewportHeight = 1080;
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------

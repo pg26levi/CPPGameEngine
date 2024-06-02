@@ -39,6 +39,8 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 	glm::mat4 model = translation * rotation * scale;
 	// VIEW
 	glm::mat4 view = glm::lookAt(cam.lock()->GetPosition(), cam.lock()->GetPosition() + cam.lock()->GetForwardVector(), glm::vec3(0, 1, 0));
+	// PROJECTION
+	matProj = glm::perspective(glm::radians(cam.lock()->GetFov()), (float)kViewportWidth / (float)kViewportHeight, cam.lock()->GetNearPlane(), cam.lock()->GetFarPlane());
 	// MVP
 	glm::mat4 mvp = matProj * view * model;
 
@@ -154,7 +156,6 @@ void CubeRenderComponent::InitializeComponent()
 		glm::vec3(0.5f, -0.5f, -0.5f)
 		});
 
-	// PERSPECTIVE
-	matProj = glm::perspective(glm::radians(90.0f), (float)kViewportWidth / (float)kViewportHeight, 0.1f, 1000.0f);
+
 }
 

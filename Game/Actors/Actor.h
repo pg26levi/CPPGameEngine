@@ -29,6 +29,8 @@ public:
 
 	virtual void InitializeActor(const glm::vec3 spawnPosition);
 
+	bool shouldTick = false;
+
 	// Variadic Arguments
 	template<std::derived_from<Component> ComponentType, typename ...Args>
 	std::shared_ptr<ComponentType> AddComponentOfType(Args... arguments)
@@ -55,10 +57,16 @@ public:
 	}
 
 	glm::vec3 GetPosition() const { return mTransformComponent->GetPosition(); }
+	glm::vec3 GetRotation() const { return mTransformComponent->GetRotation(); }
+
+	void SetPosition(const glm::vec3& inPos) { mTransformComponent->SetPosition(inPos); }
+	void SetRotation(const glm::vec3& inRot) { mTransformComponent->SetRotation(inRot); }
+
 
 protected:
 
 	std::shared_ptr<TransformComponent> mTransformComponent;
+
 
 };
 

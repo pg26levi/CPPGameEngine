@@ -78,10 +78,14 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 
 	playerPos = glm::vec3(0.0f, 0.0f, -5.0f);
-	Player = WORLD->SpawnActorOfClass<Actor>(playerPos);
-	Player->AddComponentOfType<CameraComponent>(90.0f, 0.1f, 1000.0f);
+	playerRot = glm::vec3(0.0f, -90.0f, 0.0f);
 
-	WORLD->SetActiveCamera(Player);
+	player = WORLD->SpawnActorOfClass<Player>(playerPos);
+	//Player->AddComponentOfType<CameraComponent>(90.0f, 0.1f, 1000.0f);
+
+	WORLD->SetActiveCamera(player);
+
+	player->shouldTick = true;
 
 	myCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3(-5.0f, 0.0f, 0.0f));
 	myCube->AddComponentOfType<CubeRenderComponent>(exColor{ 255, 0, 0, 255 }, 0.0f);
@@ -98,7 +102,7 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	{
 		for (int j = 0; j < 10; j++) {
 			// SMILEY FACE
-			if ((j == 1 && (i >= 2 && i <= 7)) || ((j == 2 || j == 3) && (i == 1 || i == 8)) || ((i == 3 || i == 6) && (j == 5 || j == 6 || j == 7))) 
+			if ((j == 1 && (i >= 2 && i <= 7)) || ((j == 2 || j == 3) && (i == 1 || i == 8)) || ((i == 3 || i == 6) && (j == 5 || j == 6 || j == 7 || j == 8))) 
 			{
 				col = exColor{ 0, 0, 255, 255 };
 			}
@@ -114,6 +118,12 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 	prevFrameTime = SDL_GetTicks();
 
+	//SDL_SetWindowSize()
+
+	SDL_Window* wind = SDL_GetWindowFromID(1);
+
+	SDL_SetWindowSize(wind, kViewportWidth, kViewportHeight);
+	SDL_SetWindowPosition(wind, kViewportWidth / 6, kViewportHeight / 6);
 
 }
 
@@ -157,6 +167,11 @@ void MyGame::OnEventsConsumed()
 
 	mUp = pState[SDL_SCANCODE_Q];
 	mDown = pState[SDL_SCANCODE_E];
+
+	mRotateRight = pState[SDL_SCANCODE_RIGHT];
+	mRotateLeft = pState[SDL_SCANCODE_LEFT];
+	mRotateUp = pState[SDL_SCANCODE_UP];
+	mRotateDown = pState[SDL_SCANCODE_DOWN];
 }
 
 //-----------------------------------------------------------------
@@ -175,102 +190,72 @@ void MyGame::Run( float fDeltaT )
 
 	if ( mRight )
 	{
-		playerPos.x -= 10.0f * Time::DeltaTime;
+		//playerPos.x -= 10.0f * Time::DeltaTime;
+		playerPos -= glm::normalize(glm::cross(WORLD->GetActiveCamera().lock()->GetForwardVector(), glm::vec3(0.0f, 1.0f, 0.0f))) * (float)(10.0f * Time::DeltaTime);
+
 	}
 	if ( mLeft )
 	{
-		playerPos.x += 10.0f * Time::DeltaTime;
+		//playerPos.x += 10.0f * Time::DeltaTime;
+		playerPos += glm::normalize(glm::cross(WORLD->GetActiveCamera().lock()->GetForwardVector(), glm::vec3(0.0f, 1.0f, 0.0f))) * (float)(10.0f * Time::DeltaTime);
+
 	}
 	if (mForward) 
 	{
-		playerPos.z += 10.0f * Time::DeltaTime;
+		playerPos -= (float)(10.0f * Time::DeltaTime) * WORLD->GetActiveCamera().lock()->GetForwardVector();
+
 	}
 	if (mBackwards)
 	{
-		playerPos.z -= 10.0f * Time::DeltaTime;
+		playerPos += (float)(10.0f * Time::DeltaTime) * WORLD->GetActiveCamera().lock()->GetForwardVector();
+
 	}
 	if (mUp) 
 	{
-		playerPos.y += 10.0f * Time::DeltaTime;
+		playerPos += (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
+
 	}
 	if (mDown) 
 	{
-		playerPos.y -= 10.0f * Time::DeltaTime;
+		playerPos -= (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
+	}
+
+	if (mRotateRight) 
+	{
+		playerRot.y += 50.0f * Time::DeltaTime;
+	}
+
+	if (mRotateLeft) 
+	{
+		playerRot.y -= 50.0f * Time::DeltaTime;
+	}
+
+	if (mRotateUp)
+	{
+		playerRot.x += 50.0f * Time::DeltaTime;
+	}
+
+	if (mRotateDown)
+	{
+		playerRot.x -= 50.0f * Time::DeltaTime;
 	}
 
 
-	Player->FindComponentOfType<TransformComponent>()->SetPosition(playerPos);
+	player->SetPosition(playerPos);
+	player->SetRotation(playerRot);
 
-	//exVector2 p1, p2;
+	myCube->SetPosition(glm::vec3(-5.0f, glm::sin(Time::ElapsedTime) * 5, 0.0f));
+
+	WORLD->Tick();
+
+
 	exColor c;
-	//float r;
-	//c.mColor[1] = 0;
-	//c.mColor[0] = 255;
-	//c.mColor[2] = 255;
-	//c.mColor[3] = 255;
-	
-	//p1.x = 175.0f;
-	//p1.y = 175.0f;
 
-	//r = 25.0f;
-
-	//mEngine->DrawLineCircle( p1, r, c, 0 );
-
-	////mEngine->DrawCircle({ kViewportWidth * 0.5f, kViewportHeight * 0.5f }, 50.0f, { 255,0,0,255 }, 1);
-
-	//mEngine->DrawLine({ kViewportWidth * 0.5f - 25.0f, kViewportHeight * 0.5f - 25.0f },
-	//	{ kViewportWidth * 0.5f + 25.0f, kViewportHeight * 0.5f - 25.0f }, { 255,0,0,255 }, 1);
-
-	//mEngine->DrawLine({ kViewportWidth * 0.5f - 25.0f, kViewportHeight * 0.5f - 25.0f },
-	//	{ kViewportWidth * 0.5f, kViewportHeight * 0.5f + 25.0f }, { 255,0,0,255 }, 1);
-
-	//mEngine->DrawLine({kViewportWidth * 0.5f + 25.0f, kViewportHeight * 0.5f - 25.0f },
-	//	{kViewportWidth * 0.5f, kViewportHeight * 0.5f + 25.0f }, { 255,0,0,255 }, 1);
-
-
-	//mEngine->DrawLineCircle({ kViewportWidth * 0.5f, kViewportHeight * 0.5f }, 150.0f, { 255,0,0,255 }, 1);
-
-	//// Eyes
-	//mEngine->DrawLineCircle({ kViewportWidth * 0.5f + 50, kViewportHeight * 0.5f - 50 }, 25.0f, { 255,0,0,255 }, 1);
-	//mEngine->DrawLineCircle({ kViewportWidth * 0.5f + 50, kViewportHeight * 0.5f - 50 }, 10.0f, { 255,0,0,255 }, 1);
-
-	//mEngine->DrawLineCircle({ kViewportWidth * 0.5f - 50, kViewportHeight * 0.5f - 50 }, 25.0f, { 255,0,0,255 }, 1);
-	//mEngine->DrawLineCircle({ kViewportWidth * 0.5f - 50, kViewportHeight * 0.5f - 50 }, 10.0f, { 255,0,0,255 }, 1);
-
-
-	//mEngine->DrawLine({ kViewportWidth * 0.5f + 50.0f, kViewportHeight * 0.5f + 50.0f },
-	//	{ kViewportWidth * 0.5f - 50.0f, kViewportHeight * 0.5f + 50.0f }, { 255,0,0,255 }, 1);
-
-
-	//p1.x = 100.0f;
-	//p1.y = 100.0f;
-
-	//p2.x = 200.0f;
-	//p2.y = 200.0f;
-
-	//c.mColor[0] = 255;
-	//c.mColor[1] = 0;
-	//c.mColor[2] = 0;
-
-	//mEngine->DrawBox( p1, p2, c, 1 );
-
-	//p1.x = 400.0f;
-	//p1.y = 400.0f;
-
-	//p2.x = 500.0f;
-	//p2.y = 500.0f;
-
-	//mEngine->DrawLineBox( p1, p2, c, 1 );
-
-	//p1.x = 400.0f;
-	//p1.y = 400.0f;
 
 	c.mColor[0] = 255;
 	c.mColor[1] = 255;
 	c.mColor[2] = 255;
 
-
-	//mEngine->DrawCircle( p1, r, c, 2 );
 
 	//mEngine->DrawText( mFontID, mTextPosition, "rizz", c, 0 );
 
@@ -292,11 +277,22 @@ void MyGame::Run( float fDeltaT )
 	//canRender = false;
 	//canPhysics = false;
 
+
 	Time::ElapsedTime += Time::DeltaTime;
 
-	glm::vec3 pos = Player->GetPosition();
+	glm::vec3 pos = player->GetPosition();
 	std::string posString = "Camera Pos: " + std::to_string(pos.x).substr(0, 5) + ", " + std::to_string(pos.y).substr(0, 5) + ", " + std::to_string(pos.z).substr(0, 5);
 	mEngine->DrawText(0, exVector2{ 0.0f, 50.0f }, posString.c_str(), exColor{ 255, 0, 0, 255 }, 0);
+
+	glm::vec3 rot = player->GetRotation();
+	std::string rotString = "Camera Rot: " + std::to_string(rot.x).substr(0, 5) + ", " + std::to_string(rot.y).substr(0, 5) + ", " + std::to_string(rot.z).substr(0, 5);
+	mEngine->DrawText(0, exVector2{ 0.0f, 75.0f }, rotString.c_str(), exColor{ 255, 0, 0, 255 }, 0);
+
+	glm::vec3 forward = WORLD->GetActiveCamera().lock()->GetForwardVector();
+	std::string forwardString = "Camera Rot: " + std::to_string(forward.x).substr(0, 5) + ", " + std::to_string(forward.y).substr(0, 5) + ", " + std::to_string(forward.z).substr(0, 5);
+	mEngine->DrawText(0, exVector2{ 0.0f, 100.0f }, forwardString.c_str(), exColor{ 255, 0, 0, 255 }, 0);
+
+
 
 }
 

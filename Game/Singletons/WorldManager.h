@@ -25,6 +25,7 @@ public:
 
 	void SetActiveCamera(std::shared_ptr<Actor> inActor);
 
+	void Tick();
 
 private:
 

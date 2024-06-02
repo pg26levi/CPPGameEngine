@@ -10,7 +10,10 @@ public:
 	TransformComponent(std::shared_ptr<Actor> owner, glm::vec3 loc);
 
 	glm::vec3 GetPosition() const;
-	void SetPosition(const glm::vec3 inValue);
+	glm::vec3 GetRotation() const;
+
+	void SetPosition(const glm::vec3& inValue);
+	void SetRotation(const glm::vec3& inValue);
 
 private:
 

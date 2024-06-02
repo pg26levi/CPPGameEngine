@@ -29,8 +29,5 @@ private:
 
 	float fTheta = 0.0f;
 
-
-
-
 };
 

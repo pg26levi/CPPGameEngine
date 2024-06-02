@@ -47,12 +47,17 @@ private:
 	bool						mUp;
 	bool						mDown;
 
+	bool						mRotateRight;
+	bool						mRotateLeft;
+	bool						mRotateUp;
+	bool						mRotateDown;
+
 	bool						canRender = true;
 	bool						canPhysics = true;
 
 	exVector2					mTextPosition;
 
-	std::shared_ptr<Actor>		Player;
+	std::shared_ptr<Actor>		player;
 
 	std::shared_ptr<Actor>		GameDesignersHead;
 
@@ -72,6 +77,7 @@ private:
 	std::thread* PhysicsThread = nullptr;
 
 	glm::vec3 playerPos;
+	glm::vec3 playerRot;
 
 	int prevFrameTime = 0;
 

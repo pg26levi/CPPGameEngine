@@ -1,6 +1,7 @@
 #include "../Components/RenderComponent.h"
 #include "Game/Singletons/RenderEngine.h"
 #include "Engine/Public/EngineInterface.h"
+#include "Game/Singletons/WorldManager.h"
 
 RenderComponent::RenderComponent(std::shared_ptr<Actor> owner, exColor color, int layer, glm::vec3 offset)
 	: Component(owner),

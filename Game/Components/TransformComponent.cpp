@@ -12,7 +12,17 @@ glm::vec3 TransformComponent::GetPosition() const
     return m_Position;
 }
 
-void TransformComponent::SetPosition(const glm::vec3 inValue)
+glm::vec3 TransformComponent::GetRotation() const
+{
+    return m_Rotation;
+}
+
+void TransformComponent::SetRotation(const glm::vec3& inValue)
+{
+    m_Rotation = inValue;
+}
+
+void TransformComponent::SetPosition(const glm::vec3& inValue)
 {
     m_Position = inValue;
 }

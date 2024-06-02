@@ -21,6 +21,13 @@ public:
 	glm::vec3 GetPosition() const;
 	glm::vec3 GetForwardVector() const { return m_ForwardVector; }
 
+	virtual void InitializeComponent();
+	virtual void TickComponent(float deltaSeconds);
+
+private:
+
+	void CalculateForwardVector();
+
 private:
 
 	float m_Fov;
@@ -28,6 +35,7 @@ private:
 	float m_farPlane;
 
 	glm::vec3 m_Offset;
+	glm::vec3 m_Rotation;
 	glm::vec3 m_ForwardVector;
 
 };
