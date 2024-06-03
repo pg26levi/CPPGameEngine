@@ -90,6 +90,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)/3rdParty/SDL;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>Out\;3rdParty/SDL/SDL2-2.0.3/lib/x86;3rdParty/SDL/SDL2_gfx-1.0.1/lib;3rdParty/SDL/SDL2_ttf-2.0.12/lib</AdditionalLibraryDirectories>
@@ -120,6 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)/3rdParty/SDL;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -167,6 +169,7 @@
     <ClInclude Include="Game\Singletons\WorldManager.h" />
     <ClInclude Include="Game\Actors\HockeyStick.h" />
     <ClInclude Include="Game\Actors\Player.h" />
+    <ClInclude Include="Game\Singletons\InputManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Components\CameraComponent.cpp" />
@@ -188,6 +191,7 @@
     <ClCompile Include="Game\Singletons\WorldManager.cpp" />
     <ClCompile Include="Game\Actors\HockeyStick.cpp" />
     <ClCompile Include="Game\Actors\Player.cpp" />
+    <ClCompile Include="Game\Singletons\InputManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="Build\afternight.ttf" />

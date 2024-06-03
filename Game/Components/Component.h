@@ -15,6 +15,8 @@ public:
 	// game functions
 	virtual void InitializeComponent();
 	virtual void TickComponent(float deltaSeconds);
+	bool ShouldTick() const { return m_shouldTick; }
+	void SetShouldTick(bool tick) { m_shouldTick = tick; };
 
 	std::shared_ptr<Actor> GetOwner() const { return m_Owner; }
 
@@ -22,6 +24,9 @@ public:
 protected:
 
 	std::shared_ptr<Actor> m_Owner;
+
+	bool m_shouldTick = false;
+
 
 };
 

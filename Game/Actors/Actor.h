@@ -21,6 +21,7 @@ protected:
 public:
 
 	Actor();
+	Actor(std::string& name);
 	~Actor();
 
 	virtual void BeginPlay();
@@ -28,6 +29,9 @@ public:
 	virtual void Tick(float deltaSeconds);
 
 	virtual void InitializeActor(const glm::vec3 spawnPosition);
+
+	void SetName(std::string& inName) { m_Name = inName; };
+	std::string GetName() { return m_Name; };
 
 	bool shouldTick = false;
 
@@ -67,6 +71,7 @@ protected:
 
 	std::shared_ptr<TransformComponent> mTransformComponent;
 
+	std::string m_Name;
 
 };
 

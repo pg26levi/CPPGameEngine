@@ -1,5 +1,21 @@
 #include "Player.h"
 
+Player::Player() : Actor()
+{
+	
+
+}
+
+Player::Player(std::string& name) : Actor(name)
+{
+
+}
+
+Player::~Player()
+{
+
+}
+
 void Player::BeginPlay()
 {
 }

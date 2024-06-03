@@ -18,6 +18,8 @@ public:
     exColor GetColor() const;
     void SetColor(exColor inColor);
 
+    void DrawActorName(bool draw);
+
 protected:
     exColor m_Color;
     int m_Layer;
@@ -31,5 +33,13 @@ protected:
     void DrawTriangle(exEngineInterface* engineInterface, Triangle tri, bool filled, const exColor& color, int layer = 0);
 
     glm::vec3 NormalizeCoordinates(const glm::vec4& vert) const;
+
+    // Threshold for culling triangles outside NDC range (-1) - (1)
+    // @TODO SCALE THIS ON A PER OBJECT BASIS BASED ON DISTANCE FROM CAMERA
+    // Value can be low for far away entities, needs to be higher when closer up as the vertices stick further off screen due to perspective
+    const int CullThreshold = 2250;
+
+    bool drawActorName = false;
+
 };
 

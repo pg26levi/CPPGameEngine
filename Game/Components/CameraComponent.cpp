@@ -11,7 +11,7 @@ CameraComponent::CameraComponent(std::shared_ptr<Actor> owner, float inFov, floa
 	m_ForwardVector(0.0f, 0.0f, -1.0f),
 	m_Rotation(0.0f, -90.0f, 0.0f)
 {
-
+	m_shouldTick = true;
 
 }
 
@@ -20,8 +20,14 @@ glm::vec3 CameraComponent::GetPosition() const
 	return GetOwner()->GetPosition() + m_Offset;
 }
 
+glm::vec3 CameraComponent::GetRotation() const
+{
+	return GetOwner()->GetRotation() + m_Rotation;
+}
+
 void CameraComponent::InitializeComponent()
 {
+	CalculateForwardVector();
 }
 
 void CameraComponent::TickComponent(float deltaSeconds)
@@ -33,13 +39,16 @@ void CameraComponent::CalculateForwardVector()
 {
 	m_Rotation = GetOwner()->GetRotation();
 
-	if (m_Rotation.y > 360 || m_Rotation.y < -360)
-		m_Rotation.y = 0;
+	//if (m_Rotation.y > 360 || m_Rotation.y < -360) 
+	//{
+	//	m_Rotation.y = 0;
+	//	GetOwner()->SetRotation(m_Rotation);
+	//}
 
-	if (m_Rotation.x > 89.0f)
-		m_Rotation.x = 89.0f;
-	if (m_Rotation.x < -89.0f)
-		m_Rotation.x = -89.0f;
+	//if (m_Rotation.x > 89.0f)
+	//	m_Rotation.x = 89.0f;
+	//if (m_Rotation.x < -89.0f)
+	//	m_Rotation.x = -89.0f;
 
 	glm::vec3 direction;
 

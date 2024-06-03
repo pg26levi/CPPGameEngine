@@ -31,12 +31,12 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 	// TRANSLATION
 	glm::mat4 translation = glm::translate(identity, -GetOwner()->FindComponentOfType<TransformComponent>()->GetPosition() + m_Offset);
 	// ROTATION
-	glm::mat4 rotation = glm::rotate(identity, glm::radians((float)glm::sin(fTheta) * 100.0f), glm::vec3(1, 1, 1));
+	matRot = glm::rotate(identity, glm::radians((float)glm::sin(fTheta) * 100.0f), glm::vec3(1, 1, 1));
 	//rotation = glm::rotate(identity, glm::radians(0.0f), glm::vec3(1, 1, 1));
 	// SCALE
 	glm::mat4 scale = glm::scale(identity, glm::vec3(1.0f, 1.0f, 1.0f));
 	// MODEL
-	glm::mat4 model = translation * rotation * scale;
+	glm::mat4 model = translation * matRot * scale;
 	// VIEW
 	glm::mat4 view = glm::lookAt(cam.lock()->GetPosition(), cam.lock()->GetPosition() + cam.lock()->GetForwardVector(), glm::vec3(0, 1, 0));
 	// PROJECTION
@@ -44,45 +44,55 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 	// MVP
 	glm::mat4 mvp = matProj * view * model;
 
-	bool firstFace = false;
+	bool shouldDraw = true;
 
 	// Iterate over triangles in mesh
 	for (const Triangle& tri : cubeMesh.tris) 
 	{
-		Triangle newTri;
-		int currentVert = 0;
+		Triangle projectedTri;
 
 		// Iterate over vertices in triangle
-		for (const glm::vec3& vec : tri.v) 
+		for (int i = 0; i < 3; i++) 
 		{
+			glm::vec4 vert = glm::vec4(tri.v[i].x, tri.v[i].y, tri.v[i].z, 1.0f); 
 
-			glm::vec4 vert = glm::vec4(vec.x, vec.y, vec.z, 1.0f);
-
-			vert.x = -vert.x;
-			vert.y = -vert.y;
-
+			// Vertex transformation by MVP
 			vert = mvp * vert;
+
 			// Transform coordinates from clip-space to device
 			glm::vec3 normalizedVert = NormalizeCoordinates(vert);
 
-			newTri.v[currentVert] = normalizedVert;
+			// Behind camera cull check
+			if (normalizedVert.z < 1.0f)
+			{
+				shouldDraw = false;
+				break;
+			}
 
-			//engineInterface->DrawText(0, exVector2{ newTri.v[currentVert].x, newTri.v[currentVert].y }, "Sigma", exColor{ 255, 0, 0, 255 }, 0);
-			//if(firstFace)
-			//	engineInterface->DrawText(0, exVector2{ newTri.v[currentVert].x, newTri.v[currentVert].y }, std::to_string(currentVert).c_str(), exColor{255, 0, 0, 255}, 0);
-			//else 
-			//	engineInterface->DrawText(0, exVector2{ newTri.v[currentVert].x, newTri.v[currentVert].y - 20 }, std::to_string(currentVert).c_str(), exColor{ 0, 255, 0, 255 }, 0);
+			projectedTri.v[i] = normalizedVert;
 
-			currentVert++;
+			//engineInterface->DrawText(0, exVector2{ newTri.v[i].x, newTri.v[i].y }, "Sigma", exColor{ 255, 0, 0, 255 }, 0);
 
 		}
 
-		DrawTriangle(engineInterface, newTri, false, m_Color, 0);
-
-		firstFace = !firstFace;
+		if(shouldDraw)
+			DrawTriangle(engineInterface, projectedTri, false, m_Color, 0);
 
 	}
 
+	if (drawActorName) {
+
+		glm::vec4 textPos = glm::vec4(GetOwner()->GetPosition(), 1.0f);
+		textPos.y = -textPos.y;
+		textPos.x = -textPos.x;
+		textPos = matProj * view * textPos;
+		glm::vec3 normalizedTextPos = NormalizeCoordinates(textPos);
+		if (normalizedTextPos.z < 1.0f)
+		{
+			return;
+		}
+		engineInterface->DrawText(0, exVector2{ normalizedTextPos.x, normalizedTextPos.y}, GetOwner()->GetName().c_str(), exColor{255, 255, 255, 255}, 0);
+	}
 
 }
 
@@ -155,7 +165,6 @@ void CubeRenderComponent::InitializeComponent()
 		glm::vec3(0.5f, -0.5f, 0.5f),
 		glm::vec3(0.5f, -0.5f, -0.5f)
 		});
-
 
 }
 

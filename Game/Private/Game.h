@@ -34,6 +34,8 @@ public:
 	virtual void Render();
 	virtual void Physics();
 
+	virtual void InitConsole();
+
 private:
 
 	exEngineInterface*			mEngine;

@@ -18,6 +18,7 @@
 
 #include "Game/GameCore/Utils.h"
 
+
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
@@ -87,8 +88,10 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 	player->shouldTick = true;
 
-	myCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3(-5.0f, 0.0f, 0.0f));
+	myCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3(-5.0f, 0.0f, 0.0f), std::string{"Test Actor"});
 	myCube->AddComponentOfType<CubeRenderComponent>(exColor{ 255, 0, 0, 255 }, 0.0f);
+
+	myCube->FindComponentOfType<CubeRenderComponent>()->DrawActorName(true);
 
 	myCube2 = WORLD->SpawnActorOfClass<Actor>(glm::vec3(0.0f, 0.0f, 0.0f));
 	myCube2->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);
@@ -98,33 +101,33 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 	exColor col;
 
-	for (int i = 0; i < 10; i++) 
-	{
-		for (int j = 0; j < 10; j++) {
-			// SMILEY FACE
-			if ((j == 1 && (i >= 2 && i <= 7)) || ((j == 2 || j == 3) && (i == 1 || i == 8)) || ((i == 3 || i == 6) && (j == 5 || j == 6 || j == 7 || j == 8))) 
-			{
-				col = exColor{ 0, 0, 255, 255 };
-			}
-			else 
-				col = exColor{ 255, 0, 255, 255 };
-			
+	//for (int i = 0; i < 10; i++) 
+	//{
+	//	for (int j = 0; j < 10; j++) {
+	//		// SMILEY FACE
+	//		if ((j == 1 && (i >= 2 && i <= 7)) || ((j == 2 || j == 3) && (i == 1 || i == 8)) || ((i == 3 || i == 6) && (j == 5 || j == 6 || j == 7 || j == 8))) 
+	//		{
+	//			col = exColor{ 0, 0, 255, 255 };
+	//		}
+	//		else 
+	//			col = exColor{ 255, 0, 255, 255 };
+	//		
 
-			WORLD->SpawnActorOfClass<Actor>(glm::vec3( i * 2, j * 2, -10.0f ))->AddComponentOfType<CubeRenderComponent>(col, 0.0f);;
-		}
-	}
+	//		WORLD->SpawnActorOfClass<Actor>(glm::vec3( i * 2, j * 2, -10.0f ))->AddComponentOfType<CubeRenderComponent>(col, 0.0f);;
+	//	}
+	//}
 
 	//SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	prevFrameTime = SDL_GetTicks();
-
-	//SDL_SetWindowSize()
 
 	SDL_Window* wind = SDL_GetWindowFromID(1);
 
 	SDL_SetWindowSize(wind, kViewportWidth, kViewportHeight);
 	SDL_SetWindowPosition(wind, kViewportWidth / 6, kViewportHeight / 6);
 
+	
+	InitConsole();
 }
 
 //-----------------------------------------------------------------
@@ -222,29 +225,31 @@ void MyGame::Run( float fDeltaT )
 
 	if (mRotateRight) 
 	{
-		playerRot.y += 50.0f * Time::DeltaTime;
+		playerRot.y += 100.0f * Time::DeltaTime;
 	}
 
 	if (mRotateLeft) 
 	{
-		playerRot.y -= 50.0f * Time::DeltaTime;
+		playerRot.y -= 100.0f * Time::DeltaTime;
 	}
 
 	if (mRotateUp)
 	{
-		playerRot.x += 50.0f * Time::DeltaTime;
+		playerRot.x += 100.0f * Time::DeltaTime;
 	}
 
 	if (mRotateDown)
 	{
-		playerRot.x -= 50.0f * Time::DeltaTime;
+		playerRot.x -= 100.0f * Time::DeltaTime;
 	}
 
 
 	player->SetPosition(playerPos);
 	player->SetRotation(playerRot);
 
-	myCube->SetPosition(glm::vec3(-5.0f, glm::sin(Time::ElapsedTime) * 5, 0.0f));
+	//myCube->SetPosition(glm::vec3(-5.0f - glm::sin(Time::ElapsedTime) * 5, glm::sin(Time::ElapsedTime) * 5, 0.0f));
+	//myCube2->SetPosition(glm::vec3(0.0f, glm::sin(Time::ElapsedTime) * 5, 0.0f));
+	//myCube3->SetPosition(glm::vec3(5.0f + glm::sin(Time::ElapsedTime) * 5, glm::sin(Time::ElapsedTime) * 5, 0.0f));
 
 	WORLD->Tick();
 
@@ -289,10 +294,8 @@ void MyGame::Run( float fDeltaT )
 	mEngine->DrawText(0, exVector2{ 0.0f, 75.0f }, rotString.c_str(), exColor{ 255, 0, 0, 255 }, 0);
 
 	glm::vec3 forward = WORLD->GetActiveCamera().lock()->GetForwardVector();
-	std::string forwardString = "Camera Rot: " + std::to_string(forward.x).substr(0, 5) + ", " + std::to_string(forward.y).substr(0, 5) + ", " + std::to_string(forward.z).substr(0, 5);
+	std::string forwardString = "View Vector: " + std::to_string(forward.x).substr(0, 5) + ", " + std::to_string(forward.y).substr(0, 5) + ", " + std::to_string(forward.z).substr(0, 5);
 	mEngine->DrawText(0, exVector2{ 0.0f, 100.0f }, forwardString.c_str(), exColor{ 255, 0, 0, 255 }, 0);
-
-
 
 }
 
@@ -312,3 +315,14 @@ void MyGame::Physics()
 	if(!canPhysics)
 		PHYSICS_ENGINE->Physics();
 }
+
+#include "Windows.h"
+
+void MyGame::InitConsole()
+{
+	AllocConsole();
+	freopen("CONOUT$", "w", stdout);
+	//freopen("CONIN$", "r", stdin);
+}
+
+

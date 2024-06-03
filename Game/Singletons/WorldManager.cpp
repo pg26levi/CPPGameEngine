@@ -25,13 +25,17 @@ void WorldManager::SetActiveCamera(std::shared_ptr<Actor> inActor)
 
 void WorldManager::Tick()
 {
-
+	int tickingActors = 0;
 	for (std::shared_ptr<Actor> actor : m_Actors) 
 	{
-		if (actor->shouldTick)
+		if (actor->shouldTick) 
+		{
 			actor->Tick(Time::DeltaTime);
+			tickingActors++;
+		}
 
 	}
+
 }
 
 WorldManager::WorldManager()

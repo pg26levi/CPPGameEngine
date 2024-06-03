@@ -19,6 +19,7 @@ public:
 	float GetNearPlane() const { return m_nearPlane; }
 
 	glm::vec3 GetPosition() const;
+	glm::vec3 GetRotation() const;
 	glm::vec3 GetForwardVector() const { return m_ForwardVector; }
 
 	virtual void InitializeComponent();
