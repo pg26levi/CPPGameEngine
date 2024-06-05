@@ -101,23 +101,23 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 	exColor col;
 
-	//for (int i = 0; i < 10; i++) 
-	//{
-	//	for (int j = 0; j < 10; j++) {
-	//		// SMILEY FACE
-	//		if ((j == 1 && (i >= 2 && i <= 7)) || ((j == 2 || j == 3) && (i == 1 || i == 8)) || ((i == 3 || i == 6) && (j == 5 || j == 6 || j == 7 || j == 8))) 
-	//		{
-	//			col = exColor{ 0, 0, 255, 255 };
-	//		}
-	//		else 
-	//			col = exColor{ 255, 0, 255, 255 };
-	//		
+	for (int i = 0; i < 10; i++) 
+	{
+		for (int j = 0; j < 10; j++) {
+			// SMILEY FACE
+			if ((j == 1 && (i >= 2 && i <= 7)) || ((j == 2 || j == 3) && (i == 1 || i == 8)) || ((i == 3 || i == 6) && (j == 5 || j == 6 || j == 7 || j == 8))) 
+			{
+				col = exColor{ 0, 0, 255, 255 };
+			}
+			else 
+				col = exColor{ 255, 0, 255, 255 };
+			
 
-	//		WORLD->SpawnActorOfClass<Actor>(glm::vec3( i * 2, j * 2, -10.0f ))->AddComponentOfType<CubeRenderComponent>(col, 0.0f);;
-	//	}
-	//}
+			WORLD->SpawnActorOfClass<Actor>(glm::vec3( i * 2, j * 2, -10.0f ))->AddComponentOfType<CubeRenderComponent>(col, 0.0f);;
+		}
+	}
 
-	//SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	prevFrameTime = SDL_GetTicks();
 
@@ -296,6 +296,16 @@ void MyGame::Run( float fDeltaT )
 	glm::vec3 forward = WORLD->GetActiveCamera().lock()->GetForwardVector();
 	std::string forwardString = "View Vector: " + std::to_string(forward.x).substr(0, 5) + ", " + std::to_string(forward.y).substr(0, 5) + ", " + std::to_string(forward.z).substr(0, 5);
 	mEngine->DrawText(0, exVector2{ 0.0f, 100.0f }, forwardString.c_str(), exColor{ 255, 0, 0, 255 }, 0);
+
+
+	int x, y;
+
+	SDL_GetRelativeMouseState(&x, &y);
+
+	std::cout << x << "___" << y << std::endl;
+
+	playerRot.x += y * -0.1f;
+	playerRot.y += x * 0.1f;
 
 }
 

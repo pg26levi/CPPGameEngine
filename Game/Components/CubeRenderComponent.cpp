@@ -71,8 +71,6 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 
 			projectedTri.v[i] = normalizedVert;
 
-			//engineInterface->DrawText(0, exVector2{ newTri.v[i].x, newTri.v[i].y }, "Sigma", exColor{ 255, 0, 0, 255 }, 0);
-
 		}
 
 		if(shouldDraw)
