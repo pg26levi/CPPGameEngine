@@ -23,15 +23,17 @@ std::shared_ptr<InputManager> InputManager::GetInstance()
 
 void InputManager::DestroyInstance()
 {
+
 }
 
 void InputManager::Update()
 {
+
 }
 
-void InputManager::BindInput(char key, std::shared_ptr<Player> player, InputDelegate func)
+void InputManager::BindInput(SDL_Scancode scanCode, std::shared_ptr<Player> player, InputDelegate func)
 {
+	inputBindingMap[scanCode] = func;
 
-
-
+	m_BoundPlayer = player;
 }

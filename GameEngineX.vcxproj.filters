@@ -55,6 +55,7 @@
     <ClInclude Include="Game\Components\CameraComponent.h" />
     <ClInclude Include="Game\Actors\Player.h" />
     <ClInclude Include="Game\Singletons\InputManager.h" />
+    <ClInclude Include="Game\Components\CubeColliderPhysicsComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Private\Main.cpp">
@@ -105,9 +106,6 @@
     <ClCompile Include="Game\Components\CubeRenderComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Public\EngineTypes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game\Components\CameraComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -115,6 +113,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Game\Singletons\InputManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\Components\CubeColliderPhysicsComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

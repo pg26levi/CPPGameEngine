@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Components\CubeColliderPhysicsComponent.h" />
     <ClInclude Include="Game\Components\CameraComponent.h" />
     <ClInclude Include="Game\Components\CubeRenderComponent.h" />
     <ClInclude Include="Game\Actors\Football.h" />
@@ -172,8 +173,8 @@
     <ClInclude Include="Game\Singletons\InputManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Components\CubeColliderPhysicsComponent.cpp" />
     <ClCompile Include="Game\Components\CameraComponent.cpp" />
-    <ClCompile Include="Engine\Public\EngineTypes.cpp" />
     <ClCompile Include="Game\Components\CubeRenderComponent.cpp" />
     <ClCompile Include="Game\Actors\Football.cpp" />
     <ClCompile Include="Game\Components\CircleColliderPhysicsComponent.cpp" />

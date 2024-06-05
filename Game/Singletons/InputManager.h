@@ -1,6 +1,7 @@
 #pragma once
 #include "Game/GameCore/Utils.h"
 #include "Game/Actors/Player.h"
+#include "SDL2-2.0.3/include/SDL_scancode.h"
 
 #define INPUT_MANAGER InputManager::GetInstance()
 
@@ -11,10 +12,9 @@ class InputManager
 
 private:
 
-
 	static std::shared_ptr<InputManager> sInstance;
-	// Map for corellating keyboard characters to function calls
-	std::map<char, InputDelegate> inputBindingMap;
+	// Map for corelating keyboard characters to function calls
+	std::map<SDL_Scancode, InputDelegate> inputBindingMap;
 
 	std::weak_ptr<Player> m_BoundPlayer;
 
@@ -25,7 +25,7 @@ public:
 
 	void Update();
 
-	void BindInput(char key, std::shared_ptr<Player> player, InputDelegate func);
+	void BindInput(SDL_Scancode scanCode, std::shared_ptr<Player> player, InputDelegate func);
 
 	InputManager();
 	~InputManager();

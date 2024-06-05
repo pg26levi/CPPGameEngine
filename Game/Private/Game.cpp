@@ -15,6 +15,7 @@
 #include "Game/Singletons/RenderEngine.h"
 #include "Game/Singletons/PhysicsEngine.h"
 #include "Game/Singletons/WorldManager.h"
+#include "Game/Singletons/InputManager.h"
 
 #include "Game/GameCore/Utils.h"
 
@@ -175,6 +176,9 @@ void MyGame::OnEventsConsumed()
 	mRotateLeft = pState[SDL_SCANCODE_LEFT];
 	mRotateUp = pState[SDL_SCANCODE_UP];
 	mRotateDown = pState[SDL_SCANCODE_DOWN];
+
+	INPUT_MANAGER->Update();
+
 }
 
 //-----------------------------------------------------------------
@@ -182,7 +186,6 @@ void MyGame::OnEventsConsumed()
 
 void MyGame::Run( float fDeltaT )
 {
-
 
 	Uint32 currentFrameTime = SDL_GetTicks();
 	float deltaTime = (currentFrameTime - prevFrameTime) / 1000.0f;
@@ -215,12 +218,12 @@ void MyGame::Run( float fDeltaT )
 	}
 	if (mUp) 
 	{
-		playerPos += (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
+		playerPos -= (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
 
 	}
 	if (mDown) 
 	{
-		playerPos -= (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
+		playerPos += (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 
 	if (mRotateRight) 
@@ -252,7 +255,6 @@ void MyGame::Run( float fDeltaT )
 	//myCube3->SetPosition(glm::vec3(5.0f + glm::sin(Time::ElapsedTime) * 5, glm::sin(Time::ElapsedTime) * 5, 0.0f));
 
 	WORLD->Tick();
-
 
 	exColor c;
 
@@ -301,8 +303,6 @@ void MyGame::Run( float fDeltaT )
 	int x, y;
 
 	SDL_GetRelativeMouseState(&x, &y);
-
-	std::cout << x << "___" << y << std::endl;
 
 	playerRot.x += y * -0.1f;
 	playerRot.y += x * 0.1f;
