@@ -9,6 +9,8 @@
 
 #include "Game/Singletons/WorldManager.h"
 
+Mesh* CubeRenderComponent::cubeMesh = nullptr;
+
 CubeRenderComponent::CubeRenderComponent(std::shared_ptr<Actor> owner, exColor color, float scale, glm::vec3 offset)
 	: RenderComponent(owner, color, 0, offset),
 	matProj(0.0f)
@@ -47,7 +49,7 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 	bool shouldDraw = true;
 
 	// Iterate over triangles in mesh
-	for (const Triangle& tri : cubeMesh.tris) 
+	for (const Triangle& tri : cubeMesh->tris) 
 	{
 		Triangle projectedTri;
 
@@ -97,72 +99,80 @@ void CubeRenderComponent::Render(exEngineInterface* engineInterface)
 void CubeRenderComponent::InitializeComponent()
 {
 	RenderComponent::InitializeComponent();
-	// S
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(-0.5f, 0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, -0.5f)
-		});
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, -0.5f),
-		glm::vec3(0.5f, -0.5f, -0.5f)
-		});
-	// E
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f)
-		});
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(0.5f, -0.5f, 0.5f)
-		});
-	// N
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, -0.5f, 0.5f),
-		glm::vec3(-0.5f, 0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f)
-		});
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, -0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(0.5f, -0.5f, 0.5f)
-		});
-	// W
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(-0.5f, 0.5f, -0.5f),
-		glm::vec3(-0.5f, 0.5f, 0.5f)
-		});
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(-0.5f, 0.5f, 0.5f),
-		glm::vec3(-0.5f, -0.5f, 0.5f)
-		});
-	// TOP
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, 0.5f, -0.5f),
-		glm::vec3(-0.5f, 0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		});
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, 0.5f, -0.5f),
-		glm::vec3(0.5f, 0.5f, 0.5f),
-		glm::vec3(0.5f, 0.5f, -0.5f)
-		});
-	// BOTTOM
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(-0.5f, -0.5f, 0.5f),
-		glm::vec3(0.5f, -0.5f, 0.5f),
-		});
-	cubeMesh.tris.push_back(Triangle{
-		glm::vec3(-0.5f, -0.5f, -0.5f),
-		glm::vec3(0.5f, -0.5f, 0.5f),
-		glm::vec3(0.5f, -0.5f, -0.5f)
-		});
+
+	// Only initialize our cubeMesh once because all cubes are using the same static data for its vertex positions
+	if (CubeRenderComponent::cubeMesh == nullptr) 
+	{
+		CubeRenderComponent::cubeMesh = new Mesh();
+		// S
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, -0.5f, -0.5f),
+			glm::vec3(-0.5f, 0.5f, -0.5f),
+			glm::vec3(0.5f, 0.5f, -0.5f)
+			});
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, -0.5f, -0.5f),
+			glm::vec3(0.5f, 0.5f, -0.5f),
+			glm::vec3(0.5f, -0.5f, -0.5f)
+			});
+		// E
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(0.5f, -0.5f, -0.5f),
+			glm::vec3(0.5f, 0.5f, -0.5f),
+			glm::vec3(0.5f, 0.5f, 0.5f)
+			});
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(0.5f, -0.5f, -0.5f),
+			glm::vec3(0.5f, 0.5f, 0.5f),
+			glm::vec3(0.5f, -0.5f, 0.5f)
+			});
+		// N
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, -0.5f, 0.5f),
+			glm::vec3(-0.5f, 0.5f, 0.5f),
+			glm::vec3(0.5f, 0.5f, 0.5f)
+			});
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, -0.5f, 0.5f),
+			glm::vec3(0.5f, 0.5f, 0.5f),
+			glm::vec3(0.5f, -0.5f, 0.5f)
+			});
+		// W
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, -0.5f, -0.5f),
+			glm::vec3(-0.5f, 0.5f, -0.5f),
+			glm::vec3(-0.5f, 0.5f, 0.5f)
+			});
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, -0.5f, -0.5f),
+			glm::vec3(-0.5f, 0.5f, 0.5f),
+			glm::vec3(-0.5f, -0.5f, 0.5f)
+			});
+		// TOP
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, 0.5f, -0.5f),
+			glm::vec3(-0.5f, 0.5f, 0.5f),
+			glm::vec3(0.5f, 0.5f, 0.5f),
+			});
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, 0.5f, -0.5f),
+			glm::vec3(0.5f, 0.5f, 0.5f),
+			glm::vec3(0.5f, 0.5f, -0.5f)
+			});
+		// BOTTOM
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, -0.5f, -0.5f),
+			glm::vec3(-0.5f, -0.5f, 0.5f),
+			glm::vec3(0.5f, -0.5f, 0.5f),
+			});
+		cubeMesh->tris.push_back(Triangle{
+			glm::vec3(-0.5f, -0.5f, -0.5f),
+			glm::vec3(0.5f, -0.5f, 0.5f),
+			glm::vec3(0.5f, -0.5f, -0.5f)
+			});
+
+	}
+
 
 }
 

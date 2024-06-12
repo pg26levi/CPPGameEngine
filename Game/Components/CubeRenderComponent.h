@@ -18,7 +18,7 @@ public:
 
 private:
 
-	Mesh cubeMesh;
+	static Mesh* cubeMesh;
 	glm::mat4 matProj;
 
 	glm::mat4 matRot;

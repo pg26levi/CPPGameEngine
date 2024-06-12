@@ -177,6 +177,10 @@ void MyGame::OnEventsConsumed()
 	mRotateUp = pState[SDL_SCANCODE_UP];
 	mRotateDown = pState[SDL_SCANCODE_DOWN];
 
+	if (pState[SDL_SCANCODE_ESCAPE])
+		SDL_Quit();
+
+	// @TODO Implement input into the input manager
 	INPUT_MANAGER->Update();
 
 }
@@ -218,12 +222,12 @@ void MyGame::Run( float fDeltaT )
 	}
 	if (mUp) 
 	{
-		playerPos -= (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
+		playerPos += (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
 
 	}
 	if (mDown) 
 	{
-		playerPos += (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
+		playerPos -= (float)(10.0f * Time::DeltaTime) * glm::vec3(0.0f, 1.0f, 0.0f);
 	}
 
 	if (mRotateRight) 
