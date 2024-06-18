@@ -13,3 +13,4 @@
 // Physics components
 #include "Game/Components/PhysicsComponent.h"
 #include "Game/Components/CircleColliderPhysicsComponent.h"
+#include "Game/Components/CubeColliderPhysicsComponent.h"

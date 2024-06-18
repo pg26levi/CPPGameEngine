@@ -1,5 +1,6 @@
 #pragma once
 #include "Game/GameCore/Utils.h"
+#include "3rdParty/GLM/glm.hpp"
 
 #define RENDER_ENGINE RenderEngine::GetInstance()
 
@@ -18,6 +19,9 @@ public:
 
 	// Render all render components from the list
 	void Render(exEngineInterface* engineInterface);
+
+	void DrawDebugLine(glm::vec3 start, glm::vec3 dir, float distance);
+
 
 	// Todo write a function to remove the rendering component
 

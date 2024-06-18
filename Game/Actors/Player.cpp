@@ -2,8 +2,7 @@
 
 Player::Player() : Actor()
 {
-	
-
+	shouldTick = true;
 }
 
 Player::Player(std::string& name) : Actor(name)

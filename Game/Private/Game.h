@@ -36,6 +36,8 @@ public:
 
 	virtual void InitConsole();
 
+	virtual void TestFire();
+
 private:
 
 	exEngineInterface*			mEngine;
@@ -53,6 +55,8 @@ private:
 	bool						mRotateLeft;
 	bool						mRotateUp;
 	bool						mRotateDown;
+
+	bool						mFire;
 
 	bool						canRender = true;
 	bool						canPhysics = true;

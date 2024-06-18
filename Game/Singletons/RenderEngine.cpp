@@ -36,6 +36,15 @@ void RenderEngine::Render(exEngineInterface* engineInterface)
 
 }
 
+void RenderEngine::DrawDebugLine(glm::vec3 start, glm::vec3 dir, float distance)
+{
+
+
+
+
+
+}
+
 RenderEngine::RenderEngine() 
 {
 

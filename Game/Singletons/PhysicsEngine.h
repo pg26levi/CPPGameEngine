@@ -19,7 +19,11 @@ public:
 	// Render all render components from the list
 	void Physics();
 
+
+
 	// Todo write a function to remove the rendering component
+
+
 
 private:
 

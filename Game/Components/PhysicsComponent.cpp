@@ -20,7 +20,7 @@ void PhysicsComponent::Physics()
 
 		if (std::shared_ptr<TransformComponent> transformComponent = m_Owner->FindComponentOfType<TransformComponent>()) 
 		{
-			const glm::vec3 newPosition = transformComponent->GetPosition() + mVelocity;
+			const glm::vec3 newPosition = transformComponent->GetPosition() + mVelocity * (float)Time::DeltaTime * 10.0f;
 			// TODO add gravity
 			transformComponent->SetPosition(newPosition);
 		}

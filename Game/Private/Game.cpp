@@ -87,18 +87,19 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 
 	WORLD->SetActiveCamera(player);
 
-	player->shouldTick = true;
-
-	myCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3(-5.0f, 0.0f, 0.0f), std::string{"Test Actor"});
+	myCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3(-10.0f, 0.0f, 0.0f), std::string{"Test Actor"});
 	myCube->AddComponentOfType<CubeRenderComponent>(exColor{ 255, 0, 0, 255 }, 0.0f);
+	myCube->AddComponentOfType<CubeColliderPhysicsComponent>(0.5f, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	myCube->FindComponentOfType<CubeRenderComponent>()->DrawActorName(true);
 
 	myCube2 = WORLD->SpawnActorOfClass<Actor>(glm::vec3(0.0f, 0.0f, 0.0f));
 	myCube2->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 255, 0, 255 }, 0.0f);
 
-	myCube3 = WORLD->SpawnActorOfClass<Actor>(glm::vec3(5.0f, 0.0f, 0.0f));
+
+	myCube3 = WORLD->SpawnActorOfClass<Actor>(glm::vec3(10.0f, 0.0f, 0.0f));
 	myCube3->AddComponentOfType<CubeRenderComponent>(exColor{ 0, 0, 255, 255 }, 0.0f);
+	myCube3->AddComponentOfType<CubeColliderPhysicsComponent>(0.5f, glm::vec3(-1.0f, 0.0f, 0.0f));
 
 	exColor col;
 
@@ -114,7 +115,9 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 				col = exColor{ 255, 0, 255, 255 };
 			
 
-			WORLD->SpawnActorOfClass<Actor>(glm::vec3( i * 2, j * 2, -10.0f ))->AddComponentOfType<CubeRenderComponent>(col, 0.0f);;
+			std::shared_ptr<Actor> spawnedCube = WORLD->SpawnActorOfClass<Actor>(glm::vec3(i * 2, j * 2, -10.0f));
+			spawnedCube->AddComponentOfType<CubeRenderComponent>(col, 0.0f);
+			spawnedCube->AddComponentOfType<CubeColliderPhysicsComponent>(0.5f, glm::vec3(0.0f));
 		}
 	}
 
@@ -127,8 +130,9 @@ void MyGame::Initialize( exEngineInterface* pEngine )
 	SDL_SetWindowSize(wind, kViewportWidth, kViewportHeight);
 	SDL_SetWindowPosition(wind, kViewportWidth / 6, kViewportHeight / 6);
 
-	
-	InitConsole();
+
+	//InitConsole();
+
 }
 
 //-----------------------------------------------------------------
@@ -176,6 +180,8 @@ void MyGame::OnEventsConsumed()
 	mRotateLeft = pState[SDL_SCANCODE_LEFT];
 	mRotateUp = pState[SDL_SCANCODE_UP];
 	mRotateDown = pState[SDL_SCANCODE_DOWN];
+
+	mFire = pState[SDL_SCANCODE_SPACE];
 
 	if (pState[SDL_SCANCODE_ESCAPE])
 		SDL_Quit();
@@ -255,7 +261,7 @@ void MyGame::Run( float fDeltaT )
 	player->SetRotation(playerRot);
 
 	//myCube->SetPosition(glm::vec3(-5.0f - glm::sin(Time::ElapsedTime) * 5, glm::sin(Time::ElapsedTime) * 5, 0.0f));
-	//myCube2->SetPosition(glm::vec3(0.0f, glm::sin(Time::ElapsedTime) * 5, 0.0f));
+	myCube2->SetPosition(glm::vec3(0.0f, glm::sin(Time::ElapsedTime) * 5, 0.0f));
 	//myCube3->SetPosition(glm::vec3(5.0f + glm::sin(Time::ElapsedTime) * 5, glm::sin(Time::ElapsedTime) * 5, 0.0f));
 
 	WORLD->Tick();
@@ -276,14 +282,17 @@ void MyGame::Run( float fDeltaT )
 	mEngine->DrawText(mFontID, exVector2{ 0.0f, 25.0f }, (std::to_string(Time::DeltaTime) + "ms / frame").c_str(), c, 0);
 
 
-	PhysicsThread = new std::thread(&MyGame::Physics, this);
-	RenderThread = new std::thread(&MyGame::Render, this);
+	//PhysicsThread = new std::thread(&MyGame::Physics, this);
+	//RenderThread = new std::thread(&MyGame::Render, this);
 
 	//canRender = true;
 	//canPhysics = true;
 
-	RenderThread->join();
-	PhysicsThread->join();
+	//RenderThread->join();
+	//PhysicsThread->join();
+
+	RENDER_ENGINE->Render(mEngine);
+	PHYSICS_ENGINE->Physics();
 
 	//canRender = false;
 	//canPhysics = false;
@@ -311,6 +320,20 @@ void MyGame::Run( float fDeltaT )
 	playerRot.x += y * -0.1f;
 	playerRot.y += x * 0.1f;
 
+
+	if (mFire) {
+		TestFire();
+	}
+
+}
+
+void MyGame::TestFire() 
+{
+
+	std::shared_ptr<Actor> bullet = WORLD->SpawnActorOfClass<Actor>(playerPos * -1.0f, std::string{"b"});
+	bullet->AddComponentOfType<CubeRenderComponent>(exColor{ 255, 0, 0, 255 }, 0.0f);
+	bullet->AddComponentOfType<CubeColliderPhysicsComponent>(0.5f, WORLD->GetActiveCamera().lock()->GetForwardVector());
+
 }
 
 void MyGame::Render() 
@@ -326,7 +349,7 @@ void MyGame::Render()
 
 void MyGame::Physics() 
 {
-	if(!canPhysics)
+	if(canPhysics)
 		PHYSICS_ENGINE->Physics();
 }
 

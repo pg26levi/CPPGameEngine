@@ -34,6 +34,7 @@ void PhysicsEngine::Physics()
 						// TODO change resolution based on requirement
 						const glm::vec3 newVelocity = physicsComp.lock()->GetVelocity() * -1.0f;
 						physicsComp.lock()->SetVelocity(newVelocity);
+						//delete otherPhysicsComponent;
 
 						// call collision events
 						for (CollisionEventSignature& collisionEvents : physicsComp.lock()->mCollisionEvents) 
